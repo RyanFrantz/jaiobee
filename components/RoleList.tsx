@@ -17,8 +17,8 @@ export default function RoleList({roles}) {
               <p class="mt-1 truncate text-xs leading-5 text-gray-500 hover:underline">{role.title}</p>
             </a>
           </div>
-          <div class="hidden sm:flex sm:flex-col sm:items-end">
             <p class="text-sm leading-6 text-gray-900">Last Active</p>
+          <div class="hidden sm:flex sm:flex-col sm:items-end">
             <p class="mt-1 text-xs leading-5 text-gray-500">{role.lastActive}</p>
           </div>
         </li>

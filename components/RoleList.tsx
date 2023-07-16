@@ -1,6 +1,13 @@
-export default function Roles({roles}) {
+export default function RoleList({roles}) {
+  // Adapted from https://tailwindui.com/components/application-ui/lists/stacked-lists
   return (
-    <div class="border border-solid border-gray-400 rounded-b-lg px-2">
+    <>
+    <div class="flex justify-end m-2">
+      <button class="px-2 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm">
+      Add Role
+      </button>
+    </div>
+    <div class="border border-solid border-gray-400 rounded-b-lg px-4">
     <ul role="list" class="divide-y divide-gray-100">
       {roles.map((role) => (
         <li class="flex justify-between gap-x-6 py-5" id={role.id}>
@@ -18,5 +25,6 @@ export default function Roles({roles}) {
       ))} 
     </ul>
     </div>
+    </>
   );
 }

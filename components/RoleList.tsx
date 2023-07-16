@@ -3,7 +3,7 @@ export default function RoleList({roles}) {
   return (
     <>
     <div class="flex justify-end m-2">
-      <button class="px-2 rounded bg-sky-500 hover:bg-sky-600 text-white text-sm">
+      <button class="px-2 rounded bg-sky-500 hover:bg-sky-600 text-white text-sm" hx-get="/role/new" hx-target="#replaceMe" hx-swap="outerHTML">
       Add Role
       </button>
     </div>
@@ -23,6 +23,7 @@ export default function RoleList({roles}) {
           </div>
         </li>
       ))} 
+      <li class="hidden" id="replaceMe"></li>
     </ul>
     </div>
     </>

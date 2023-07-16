@@ -12,6 +12,7 @@ export default function App({ Component }: AppProps) {
       <div class="dark:bg-gray-900 text-lg">
         <div class="flex flex-col min-h-screen mx-auto max-w-7xl w-full dark:text-white">
       */}
+      <main class="font-mono">
       <div class="px-6 py-12">
       <div class="text-lg">
         <div class="flex flex-col min-h-screen mx-auto max-w-7xl w-full">
@@ -21,6 +22,7 @@ export default function App({ Component }: AppProps) {
         </div>
       </div>
       </div>
+      </main>
     </>
   );
 }

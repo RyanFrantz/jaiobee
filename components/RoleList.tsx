@@ -3,7 +3,7 @@ export default function RoleList({roles}) {
   return (
     <>
     <div class="flex justify-end m-2">
-      <button class="px-2 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm">
+      <button class="px-2 rounded bg-sky-500 hover:bg-sky-600 text-white text-sm">
       Add Role
       </button>
     </div>

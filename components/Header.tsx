@@ -1,7 +1,8 @@
 export default function Header() {
+  // Adapted from https://tailwindui.com/components/application-ui/application-shells/stacked
   return (
     <header>
-      <nav class="min-h-full bg-gray-200 px-4 rounded-t-lg">
+      <nav class="min-h-full bg-gray-200 px-4 border border-solid border-gray-400  rounded-t-lg">
         <div class="flex justify-between">
           <div class="flex h-16 items-center">
             <a href="/roles" class="m-4">

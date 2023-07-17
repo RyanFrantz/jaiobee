@@ -4,16 +4,14 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 // Hence RoleList rather than Roles below.
 //import RoleList from "../components/RoleList.tsx";
 import RoleTable from "../components/RoleTable.tsx";
+import { getRoles } from "../lib/store.ts";
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
     // TODO: Look up roles.
-    const props = {roles: [
-        {id: 1, company: "Gourment Greens", title: "Director of Engineering", lastActive: "2023-07-11"},
-        {id: 2, company: "Boomer Beamers", title: "Sr. Director of Entertainment", lastActive: "2023-07-13"}
-      ]
-    };
-    return await ctx.render(props);
+    const userId = "1"; // Hard-coded for testing.
+    const roles = await getRoles(userId);
+    return await ctx.render({roles});
   },
 };
 

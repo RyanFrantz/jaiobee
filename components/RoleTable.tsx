@@ -47,7 +47,7 @@ export default function RoleTable({roles}) {
               </a>
             </td>
             <td class="p-4">{role.company}</td>
-            <td class="p-4">{role.lastActive}</td>
+            <td class="p-4">{role["date-added"]}</td>
           </tr>
           ))} 
         </tbody>

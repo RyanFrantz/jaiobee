@@ -1,13 +1,18 @@
 import SortArrow from "./SortArrow.tsx";
 
+// NOTE: Tailwind offers table layout support via the `table` class like so:
+// https://tailwindcss.com/docs/display#table
+
 // TODO: Don't show sort arrow if that column is the one that we're sorting on.
 export default function RoleTable({roles}) {
   return (
     <>
     <div class="flex justify-end m-2">
-      <button class="px-2 rounded bg-sky-500 hover:bg-sky-600 text-white text-sm">
-      Add Role
-      </button>
+      <a href="/role/new">
+        <button class="px-2 rounded bg-sky-500 hover:bg-sky-600 text-white text-sm">
+        Add Role
+        </button>
+      </a>
     </div>
     <div class="border border-solid border-gray-400 rounded-b-lg px-4">
       <table class="table-auto text-sm">

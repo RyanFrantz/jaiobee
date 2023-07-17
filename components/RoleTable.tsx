@@ -1,4 +1,5 @@
 import SortArrow from "./SortArrow.tsx";
+import { epochToLocale } from "../lib/utils.ts";
 
 // NOTE: Tailwind offers table layout support via the `table` class like so:
 // https://tailwindcss.com/docs/display#table
@@ -47,7 +48,7 @@ export default function RoleTable({roles}) {
               </a>
             </td>
             <td class="p-4">{role.company}</td>
-            <td class="p-4">{role["date-added"]}</td>
+            <td class="p-4">{epochToLocale(role["date-added"])}</td>
           </tr>
           ))} 
         </tbody>

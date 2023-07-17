@@ -61,4 +61,5 @@ const addRole = async (userId: string, role): [number, object] => {
   return [statusCode, response];
 };
 
+// TODO: Add getRole(userId, roleId). Pair with /routes/role/[id].tsx
 export { addRole, getRoles };

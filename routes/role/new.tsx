@@ -1,8 +1,29 @@
+import { Handlers } from "$fresh/server.ts";
+
+export const handler: Handlers = {
+  async GET(_req, ctx) {
+    return await ctx.render();
+  },
+  async POST(req, _ctx) {
+    const formData = await req.formData();
+    console.log(formData);
+    console.log(formData.get("title"));
+
+    const headers = new Headers();
+    // Redirect to the new role page.
+    headers.set("location", "/roles");
+    return new Response(null, {
+      status: 303, // See Other
+      headers,
+    });
+  },
+};
+
 export default function NewRole() {
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
   return (
-    <form class="mt-1">
+    <form method="post" class="mt-1">
 	    <div class="flex justify-end m-2">
 	      <button
           type="submit"

@@ -28,10 +28,23 @@ const getRoles = async (userId: string) => {
   return roles;
 };
 
+// Look up a single role.
+// Returns an HTTP status code and an object with helpful context.
+// FIXME: Return hypermedia instead of JSON?
+const getRole = async (userId: string, roleId: number): [number, object] => {
+  const roles = await getRoles(userId);
+  const role = roles.find((r) => r.id == roleId);
+  if (role) {
+    return [200, role];
+  } else {
+    return [404, { message: "Role not found."}];
+  }
+};
+
 // Returns an HTTP status code and an object with helpful context.
 const addRole = async (userId: string, role): [number, object] => {
-  const _roles = await getRoles(userId);
-  const roleIds = _roles.map((r) => r.id);
+  const roles = await getRoles(userId);
+  const roleIds = roles.map((r) => r.id);
   const desc = (a,b) => {
     return b - a;
   };
@@ -62,4 +75,4 @@ const addRole = async (userId: string, role): [number, object] => {
 };
 
 // TODO: Add getRole(userId, roleId). Pair with /routes/role/[id].tsx
-export { addRole, getRoles };
+export { addRole, getRoles, getRole };

@@ -1,4 +1,4 @@
-export default function RoleDetails() {
+export default function RoleDetails({role}) {
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
   return (
@@ -15,6 +15,7 @@ export default function RoleDetails() {
               name="title"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
               required
+              value={role.title}
             />
           </div>
           <div class="col-span-1 mt-2 mr-2">
@@ -24,6 +25,7 @@ export default function RoleDetails() {
               name="company"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
               required
+              value={role?.company}
             />
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">

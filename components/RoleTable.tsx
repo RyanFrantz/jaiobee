@@ -43,7 +43,7 @@ export default function RoleTable({roles}) {
           {roles.map((role) => (
           <tr>
             <td class="p-4">
-              <a href="#" class="hover:underline">
+              <a href={"/role/" + role.id} class="hover:underline">
               {role.title}
               </a>
             </td>

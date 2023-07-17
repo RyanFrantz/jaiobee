@@ -4,15 +4,17 @@
 
 import * as $0 from "./routes/_app.tsx";
 import * as $1 from "./routes/index.tsx";
-import * as $2 from "./routes/role/new.tsx";
-import * as $3 from "./routes/roles.tsx";
+import * as $2 from "./routes/role/[id].tsx";
+import * as $3 from "./routes/role/new.tsx";
+import * as $4 from "./routes/roles.tsx";
 
 const manifest = {
   routes: {
     "./routes/_app.tsx": $0,
     "./routes/index.tsx": $1,
-    "./routes/role/new.tsx": $2,
-    "./routes/roles.tsx": $3,
+    "./routes/role/[id].tsx": $2,
+    "./routes/role/new.tsx": $3,
+    "./routes/roles.tsx": $4,
   },
   islands: {},
   baseUrl: import.meta.url,

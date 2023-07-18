@@ -1,3 +1,5 @@
+import { epochToLocale } from "../lib/utils.ts";
+
 export default function RoleDetails({role}) {
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
@@ -9,83 +11,78 @@ export default function RoleDetails({role}) {
         <div class="col-span-2 p-4 grid grid-cols-2">
           <div class="col-span-2 mt-2 mr-2">
             {/* "block" pushes the label above the input */}
-            <label for="title" class="block text-sm pr-2">Title</label>
-            <input
-              type="text"
-              name="title"
-              class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-              required
-              value={role.title}
-            />
+            <label for="title" class="block text-sm pr-2 underline">Title</label>
+            <span
+              class="w-full mt-1 text-sm">
+              {role.title}
+            </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">
-            <label for="company" class="block text-sm pr-1">Company</label>
-            <input
-              type="text"
+            <label for="company" class="block text-sm pr-1 underline">Company</label>
+            <span
               name="company"
-              class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-              required
-              value={role?.company}
-            />
+              class="w-full mt-1 text-sm"
+            >
+            {role?.company}
+            </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">
-            <label for="status" class="block text-sm pr-1">Status</label>
-            <select
+            <label for="status" class="block text-sm pr-1 underline">Status</label>
+            <span
               name="status"
-              class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
+              class="w-full mt-1 text-sm"
             >
-              <option value="interested" selected>Interested</option>
-              <option value="applied">Applied</option>
-              <option value="referred">Referred</option>
-              <option value="rejected">Rejected</option>
-              <option value="passed">Passed</option>
-            </select>
+            {role?.status}
+            </span>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">
-            <label for="job-posting-url" class="block text-sm pr-1">Job Posting</label>
-            <input
-              type="url"
+            <label for="job-posting-url" class="block text-sm pr-1 underline">Job Posting</label>
+            <span
               name="job-posting-url"
-              class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md placeholder:italic placeholder:text-gray-400"
-              placeholder="https://example.com/careers/123"
-              pattern="https?://.*"
-            />
+              class="w-full mt-1 text-sm"
+            >
+            {role["job-posting-url"] || "N/A"}
+            </span>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">
-            <label for="description" class="block text-sm pr-1">Description</label>
-            <textarea
-              rows="3"
+            <label for="description" class="block text-sm pr-1 underline">Description</label>
+            <p
               name="description"
-              class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-            />
+              class="w-full mt-1 text-sm"
+            >
+            {role?.description || "N/A"}
+            </p>
           </div>
         </div>
         {/* Contacts */}
         <div class="w-full p-4 grid grid-cols-1">
           {/* Only show when editinga role, not when adding the first time. */}
-          <div class="invisible col-span-1 mt-2 mr-2">
-            <label for="date-added" class="block text-sm pr-1">Date Added</label>
-            <input
-              type="date"
+          <div class="col-span-1 mt-2 mr-2">
+            <label for="date-added" class="block text-sm pr-1 underline">Date Added</label>
+            <span
               name="date-added"
-              class="w-1/2 mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-            />
+              class="w-1/2 mt-1 text-sm"
+            >
+            {epochToLocale(role["date-added"])}
+            </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">
-            <label for="referral-contact" class="block text-sm pr-1">Referral Contact</label>
-            <input
-              type="text"
+            <label for="referral-contact" class="block text-sm pr-1 underline">Referral Contact</label>
+            <span
               name="referral-contact"
-              class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-            />
+              class="w-full mt-1 text-sm"
+            >
+            {role["referral-contact"] || "N/A"}
+            </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">
-            <label for="recruiter-contact" class="block text-sm pr-1">Recruiter Contact</label>
-            <input
-              type="text"
+            <label for="recruiter-contact" class="block text-sm pr-1 underline">Recruiter Contact</label>
+            <span
               name="recruiter-contact"
-              class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-            />
+              class="w-full mt-1 text-sm"
+            >
+            {role["recruiter-contact"] || "N/A"}
+            </span>
           </div>
         </div>
       </div>

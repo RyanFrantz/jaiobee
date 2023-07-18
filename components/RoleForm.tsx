@@ -1,4 +1,4 @@
-import RoleDetails from "./RoleDetails.tsx";
+import RoleInputs from "./RoleInputs.tsx";
 import SaveRoleButton from "./SaveRoleButton.tsx";
 
 export default function RoleForm() {
@@ -6,7 +6,7 @@ export default function RoleForm() {
     <div id="role-container">
       <SaveRoleButton />
       <form id="add-role" method="post" class="mt-1">
-        <RoleDetails role={{}}/>
+        <RoleInputs role={{}}/>
       </form>
     </div>
   );

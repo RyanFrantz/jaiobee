@@ -1,4 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
+import EditRoleButton from "../../components/EditRoleButton.tsx";
 import RoleDetails from "../../components/RoleDetails.tsx";
 import { getRole } from "../../lib/store.ts";
 
@@ -20,6 +21,9 @@ export const handler: Handlers = {
 export default function Role(props) {
   const { role } = props.data;
   return (
-    <RoleDetails role={role}/>
+    <div id="role-container">
+      <EditRoleButton />
+      <RoleDetails role={role}/>
+    </div>
   );
 }

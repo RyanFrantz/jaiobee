@@ -36,9 +36,11 @@ export const handler: Handlers = {
 
 export default function AddRole() {
   return (
-    <form method="post" class="mt-1">
-      <SaveRoleButton />
-      <RoleDetails role={{}}/>
-    </form>
+    <div id="role-container">
+      <form method="post" class="mt-1">
+        <SaveRoleButton />
+        <RoleDetails role={{}}/>
+      </form>
+    </div>
   );
 }

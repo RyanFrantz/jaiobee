@@ -13,16 +13,16 @@ export const handler: Handlers = {
     if ( statusCode !== 200 ) {
       role = {};
     }
-    const props = {...ctx.state, role: role};
+    const props = {...ctx.state, role: role, roleId: roleId};
     return ctx.render(props);
   },
 };
 
 export default function Role(props) {
-  const { role } = props.data;
+  const { role, roleId } = props.data;
   return (
     <div id="role-container">
-      <EditRoleButton />
+      <EditRoleButton roleId={roleId} />
       <RoleDetails role={role}/>
     </div>
   );

@@ -7,7 +7,7 @@ export default function RoleDetails({role}) {
       <div class="grid grid-cols-3 border border-solid border-gray-400 rounded-b-lg">
         {/* Role details */}
         <div class="col-span-2 p-4 grid grid-cols-2">
-          <div class="col-span-1 mt-2 mr-2">
+          <div class="col-span-2 mt-2 mr-2">
             {/* "block" pushes the label above the input */}
             <label for="title" class="block text-sm pr-2">Title</label>
             <input
@@ -27,6 +27,19 @@ export default function RoleDetails({role}) {
               required
               value={role?.company}
             />
+          </div>
+          <div class="col-span-1 mt-2 mr-2">
+            <label for="status" class="block text-sm pr-1">Status</label>
+            <select
+              name="status"
+              class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
+            >
+              <option value="interested" selected>Interested</option>
+              <option value="applied">Applied</option>
+              <option value="referred">Referred</option>
+              <option value="rejected">Rejected</option>
+              <option value="passed">Passed</option>
+            </select>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">
             <label for="job-posting-url" class="block text-sm pr-1">Job Posting</label>

@@ -30,6 +30,12 @@ export default function RoleTable({roles}) {
               <SortArrow/>
               </div>
             </th>
+            <th class="p-4">
+              <div class="flex justify-center">
+              Status
+              <SortArrow/>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +48,7 @@ export default function RoleTable({roles}) {
             </td>
             <td class="p-4">{role.company}</td>
             <td class="p-4">{epochToLocale(role["date-added"])}</td>
+            <td class="p-4">{role.status}</td>
           </tr>
           ))} 
         </tbody>

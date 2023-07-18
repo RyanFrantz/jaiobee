@@ -16,23 +16,29 @@ export const handler: Handlers = {
     const userId = "1"; // Hard-coding for testing.
     const [statusCode, response] = await addRole(userId, role);
 
-    // TODO: If response.statusCode == 201, then 303 to
-    // `/role/${response.roleId}`
     const headers = new Headers();
     // Redirect to the new role page.
-    headers.set("location", "/roles");
+    if (statusCode == 201) {
+      const { roleId } = response;
+      headers.set("location", `/role/${roleId}`);
+      return new Response(null, {
+        status: 303, // See Other
+        headers,
+      });
+
+    }
+
     return new Response(null, {
-      status: 303, // See Other
-      headers,
+      status: 404 // blanket response, for now
     });
   },
 };
 
-export default function NewRole() {
+export default function AddRole() {
   return (
     <form method="post" class="mt-1">
       <SaveRoleButton />
-      <RoleDetails />
+      <RoleDetails role={{}}/>
     </form>
   );
 }

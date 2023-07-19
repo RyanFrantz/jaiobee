@@ -77,6 +77,7 @@ export default function RoleInputs({role}) {
               type="text"
               name="referral-contact"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
+              value={role["referral-contact"]}
             />
           </div>
           <div class="col-span-1 mt-2 mr-2">
@@ -85,6 +86,7 @@ export default function RoleInputs({role}) {
               type="text"
               name="recruiter-contact"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
+              value={role["recruiter-contact"]}
             />
           </div>
         </div>

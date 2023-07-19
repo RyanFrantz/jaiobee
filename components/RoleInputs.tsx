@@ -15,7 +15,7 @@ export default function RoleInputs({role}) {
               name="title"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
               required
-              value={role.title}
+              value={role?.title}
             />
           </div>
           <div class="col-span-1 mt-2 mr-2">

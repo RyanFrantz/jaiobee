@@ -74,5 +74,27 @@ const addRole = async (userId: string, role): [number, object] => {
   return [statusCode, response];
 };
 
+const updateRole = async (userId: string, roleId: number, role): [number, object] => {
+  const existingRole = await getRole(userId, roleId);
+  // The ID is not part of the form data so we add it back, here.
+  role.id = roleId;
+  let [ statusCode, response ] = [ 200, {} ]; // Sane default/starting point.
+  if (existingRole) {
+    const kv = await Deno.openKv();
+    try {
+      // Replace the role entirely.
+      await kv.set([userId, "roles", roleId], role);
+      response = { roleId: roleId, message: "Role updated successfully" };
+    } catch (err) {
+        statusCode = 500;
+        response.message = err;
+        console.log(`Failed to update role for userId ${userId}: ${err}`);
+    } finally {
+      kv.close();
+    }
+  }
+  return [ statusCode, response ];
+}
+
 // TODO: Add getRole(userId, roleId). Pair with /routes/role/[id].tsx
-export { addRole, getRoles, getRole };
+export { addRole, getRoles, getRole, updateRole };

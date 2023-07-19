@@ -16,6 +16,7 @@ export const handler: Handlers = {
     if ( statusCode !== 200 ) {
       role = {};
     }
+    // Let's give hypermedia a whirl, here.
     const body = render(
       <div id="role-container">
         <SaveRoleButton />

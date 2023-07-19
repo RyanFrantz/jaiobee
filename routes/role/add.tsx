@@ -1,4 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
+import SaveRoleButton from "../../components/SaveRoleButton.tsx";
 import RoleForm from "../../components/RoleForm.tsx";
 import { addRole } from "../../lib/store.ts";
 
@@ -35,6 +36,9 @@ export const handler: Handlers = {
 
 export default function AddRole() {
   return (
-    <RoleForm />
+    <div id="role-container">
+      <SaveRoleButton />
+      <RoleForm />
+    </div>
   );
 }

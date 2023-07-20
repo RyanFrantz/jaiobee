@@ -56,7 +56,6 @@ export default function RoleDetails({role}) {
         </div>
         {/* Contacts */}
         <div class="w-full p-4 grid grid-cols-1">
-          {/* Only show when editinga role, not when adding the first time. */}
           <div class="col-span-1 mt-2 mr-2">
             <label for="date-added" class="block text-sm pr-1 underline">Date Added</label>
             <span

@@ -1,9 +1,18 @@
 import { epochToLocale } from "../lib/utils.ts";
 
+const statusTypes = {
+  interested: "Interested",
+  applied: "Applied",
+  referred: "Referred",
+  rejected: "Rejected",
+  passed: "Passed",
+};
+
 export default function RoleInputs({role, action}) {
   // Possible action values are "add" and "edit" because this form is used
   // to add new roles as well as edit existing roles.
   const isEditing = (action == "edit");
+  console.log(role)
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
   return (
@@ -39,11 +48,14 @@ export default function RoleInputs({role, action}) {
               name="status"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
             >
-              <option value="interested" selected>Interested</option>
-              <option value="applied">Applied</option>
-              <option value="referred">Referred</option>
-              <option value="rejected">Rejected</option>
-              <option value="passed">Passed</option>
+              {Object.entries(statusTypes).map(([status, label]) =>
+              <option
+                value={status}
+                selected={role.status == status}
+              >
+                {label}
+              </option>
+              )}
             </select>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">

@@ -1,8 +1,3 @@
-// FIXME: Same vibe as AddRoleButton.tsx
-// I imagine using htmx markup here to replace an existing role container
-// with the same form as used in /role/add but with values already filled
-// from the existing role.
-// The link to '#' is a placeholder, for now.
 export default function EditRoleButton({roleId}) {
   return (
     <div class="flex justify-end m-2">

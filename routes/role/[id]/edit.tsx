@@ -1,7 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 import { render } from "https://esm.sh/preact-render-to-string@6.2.0";
 import { getRole } from "../../../lib/store.ts";
-import SaveRoleButton from "../../../components/SaveRoleButton.tsx";
+import EditButtonRow from "../../../components/EditButtonRow.tsx";
 import RoleForm from "../../../components/RoleForm.tsx";
 
 // Returns hypermedia that will replace a container from whence it was called.
@@ -19,7 +19,7 @@ export const handler: Handlers = {
     // Let's give hypermedia a whirl, here.
     const body = render(
       <div id="role-container">
-        <SaveRoleButton />
+        <EditButtonRow roleId={roleId} />
         <RoleForm role={role} action="edit"/>
       </div>
     );

@@ -55,8 +55,13 @@ const addRole = async (userId: string, role): [number, object] => {
     nextId = 1;
   }
   role.id = nextId;
-  if (role["date-added"].length == 0) {
+  if ("date-added" in role && role["date-added"].length == 0) {
+    // Set it by default.
     role["date-added"] = epoch();
+  } else {
+    // The value of "date-added" should be a number but the form passed it
+    // as a string.
+    role["date-added"] = parseInt(role["date-added"]);
   }
   let [ statusCode, response ] = [ 201, {} ]; // Sane default/starting point.
   const kv = await Deno.openKv();
@@ -75,15 +80,18 @@ const addRole = async (userId: string, role): [number, object] => {
 };
 
 const updateRole = async (userId: string, roleId: number, role): [number, object] => {
-  const existingRole = await getRole(userId, roleId);
+  const [getRoleStatusCode, existingRole] = await getRole(userId, roleId);
   // The ID is not part of the form data so we add it back, here.
   role.id = roleId;
   let [ statusCode, response ] = [ 200, {} ]; // Sane default/starting point.
-  if (existingRole) {
+  if (getRoleStatusCode == 200) {
+    // Merge the updated role properties with the existing role.
+    // This ensures the "date-added" property is retained.
+    const updatedRole = Object.assign(existingRole, role);
     const kv = await Deno.openKv();
     try {
       // Replace the role entirely.
-      await kv.set([userId, "roles", roleId], role);
+      await kv.set([userId, "roles", roleId], updatedRole);
       response = { roleId: roleId, message: "Role updated successfully" };
     } catch (err) {
         statusCode = 500;

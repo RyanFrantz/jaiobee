@@ -1,4 +1,9 @@
-export default function RoleInputs({role}) {
+import { epochToLocale } from "../lib/utils.ts";
+
+export default function RoleInputs({role, action}) {
+  // Possible action values are "add" and "edit" because this form is used
+  // to add new roles as well as edit existing roles.
+  const isEditing = (action == "edit");
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
   return (
@@ -62,15 +67,30 @@ export default function RoleInputs({role}) {
         </div>
         {/* Contacts */}
         <div class="w-full p-4 grid grid-cols-1">
-          {/* Only show when editinga role, not when adding the first time. */}
-          <div class="invisible col-span-1 mt-2 mr-2">
-            <label for="date-added" class="block text-sm pr-1">Date Added</label>
-            <input
-              type="date"
+          {/* We don't support editing the date the role was added. Just display it. */}
+          {/* On add, pass date-added along as a hidden input. */}
+          {isEditing ? (
+          <div class="col-span-1 mt-2 mr-2">
+            <label for="date-added" class="block text-sm pr-1 underline">Date Added</label>
+            <span
               name="date-added"
-              class="w-1/2 mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
+              class="w-1/2 mt-1 text-sm"
+            >
+            {epochToLocale(role["date-added"])}
+            </span>
+          </div>
+          ) : (
+          <div class="invisible col-span-1 mt-2 mr-2">
+            <label for="date-added" class="block text-sm pr-1 underline">Date Added</label>
+            <input
+              type="number"
+              name="date-added"
+              class="w-1/2 mt-1 text-sm"
+              value={role["date-added"]}
             />
           </div>
+          )}
+
           <div class="col-span-1 mt-2 mr-2">
             <label for="referral-contact" class="block text-sm pr-1">Referral Contact</label>
             <input

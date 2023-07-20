@@ -2,6 +2,7 @@ import { Handlers } from "$fresh/server.ts";
 import SaveRoleButton from "../../components/SaveRoleButton.tsx";
 import RoleForm from "../../components/RoleForm.tsx";
 import { addRole } from "../../lib/store.ts";
+import { epoch } from "../../lib/utils.ts";
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
@@ -35,10 +36,13 @@ export const handler: Handlers = {
 };
 
 export default function AddRole() {
+  // The user is adding the role for the first time so we'll populate a
+  // near-empty role boject with today's date (epoch).
+  const role = {"date-added": epoch()}
   return (
     <div id="role-container">
       <SaveRoleButton />
-      <RoleForm />
+      <RoleForm role={role} action="add"/>
     </div>
   );
 }

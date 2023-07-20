@@ -20,7 +20,7 @@ export const handler: Handlers = {
     const body = render(
       <div id="role-container">
         <SaveRoleButton />
-        <RoleForm role={role} />
+        <RoleForm role={role} action="edit"/>
       </div>
     );
     const headers = new Headers();

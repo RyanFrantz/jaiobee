@@ -28,14 +28,34 @@ const getRoles = async (userId: string) => {
   return roles;
 };
 
+// Return all notes associated with a role.
+const getNotes = async (userId: string, roleId: number) => {
+  const kv = await Deno.openKv();
+  const entries = await kv.list({prefix: [userId, "notes", roleId]});
+  const notes = [];
+  for await (const entry of entries) {
+    /*
+    {
+      key: [ "1", "notes", 7, 1 ],
+      value: { "created-at": 1690051859404, message: "Added role.", id: 1 },
+      versionstamp: "000000000000005d0000"
+    }
+     */
+    notes.push(entry.value);
+  }
+  kv.close();
+  return notes;
+};
+
 // Look up a single role.
 // Returns an HTTP status code and an object with helpful context.
 // FIXME: Return hypermedia instead of JSON?
 const getRole = async (userId: string, roleId: number): [number, object] => {
-  const roles = await getRoles(userId);
-  const role = roles.find((r) => r.id == roleId);
+  const kv = await Deno.openKv();
+  const role = await kv.get([userId, "roles", roleId]);
+  kv.close()
   if (role) {
-    return [200, role];
+    return [200, role.value];
   } else {
     return [404, { message: "Role not found."}];
   }
@@ -76,6 +96,49 @@ const addRole = async (userId: string, role): [number, object] => {
   } finally {
     kv.close();
   }
+
+  // First note!
+  const note = {
+    "created-at": epoch(),
+    message: "Added role."
+  }
+  await addNote(userId, role.id, note);
+
+  return [statusCode, response];
+};
+
+const addNote = async (userId: string, roleId: number, note): [number, object] => {
+  const notes = await getNotes(userId, roleId);
+  const noteIds = notes.map((r) => r.id);
+  const desc = (a,b) => {
+    return b - a;
+  };
+  let nextId;
+  if (noteIds.length > 0) {
+    nextId = noteIds.sort(desc)[0] + 1;
+  } else {
+    nextId = 1;
+  }
+  note.id = nextId;
+  if (note["created-at"].length == 0) {
+    // Set it by default.
+    note["created-at"] = epoch();
+  } else {
+    // Should be a number but the form passed it as a string.
+    note["created-at"] = parseInt(note["created-at"]);
+  }
+  let [ statusCode, response ] = [ 201, {} ]; // Sane default/starting point.
+  const kv = await Deno.openKv();
+  try {
+    await kv.set([userId, "notes", roleId, note.id], note);
+    response = { noteId: nextId, message: "Note added successfully" };
+  } catch (err) {
+      statusCode = 500;
+      response.message = err;
+      console.log(`Failed to add note to role ${roleId} for userId ${userId}: ${err}`);
+  } finally {
+    kv.close();
+  }
   return [statusCode, response];
 };
 
@@ -105,4 +168,4 @@ const updateRole = async (userId: string, roleId: number, role): [number, object
 }
 
 // TODO: Add getRole(userId, roleId). Pair with /routes/role/[id].tsx
-export { addRole, getRoles, getRole, updateRole };
+export { addRole, getRoles, getRole, updateRole, addNote };

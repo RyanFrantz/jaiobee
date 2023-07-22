@@ -50,9 +50,16 @@ export const handler: Handlers = {
 export default function Role(props) {
   const { role, roleId } = props.data;
   return (
-    <div id="role-container">
-      <EditRoleButton roleId={roleId} />
-      <RoleDetails role={role}/>
-    </div>
+    <>
+      <div id="role-container">
+        <EditRoleButton roleId={roleId} />
+        <RoleDetails role={role}/>
+      </div>
+      <div id="note-container" class="mt-4"
+        hx-get={"/role/" + roleId + "/notes"} hx-trigger="load"
+        hx-target="#note-container" hx-swap="outerHTML"
+      >
+      </div>
+    </>
   );
 }

@@ -168,4 +168,4 @@ const updateRole = async (userId: string, roleId: number, role): [number, object
 }
 
 // TODO: Add getRole(userId, roleId). Pair with /routes/role/[id].tsx
-export { addRole, getRoles, getRole, updateRole, addNote };
+export { addRole, getRoles, getRole, updateRole, addNote, getNotes };

@@ -74,7 +74,9 @@ export default function RoleInputs({role, action}) {
               rows="3"
               name="description"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-            />
+            >
+            {role?.description}
+            </textarea>
           </div>
         </div>
         {/* Contacts */}

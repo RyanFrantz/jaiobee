@@ -18,8 +18,9 @@ export const handler: Handlers = {
       <>
       <div id="note-container" class="mt-4">
         <AddNoteButton />
+        <div id="new-note"></div>
         {notes.map((note) => (
-          <div class="w-full px-2 py-1 border border-solid rounded-lg text-sm flex justify-start border-gray-300">
+          <div class="w-full mt-1 px-2 py-1 border border-solid rounded-lg text-sm flex justify-start border-gray-400">
               <div class="px-2 text-white bg-emerald-500 border rounded-full">
                 {epochToLocale(note["created-at"])}
               </div>

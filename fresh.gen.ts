@@ -6,9 +6,9 @@ import * as $0 from "./routes/_app.tsx";
 import * as $1 from "./routes/index.tsx";
 import * as $2 from "./routes/role/[id].tsx";
 import * as $3 from "./routes/role/[id]/edit.tsx";
-import * as $4 from "./routes/role/[id]/notes.tsx";
-import * as $5 from "./routes/role/add.tsx";
-import * as $6 from "./routes/role/note/add.tsx";
+import * as $4 from "./routes/role/[id]/note/add.tsx";
+import * as $5 from "./routes/role/[id]/notes.tsx";
+import * as $6 from "./routes/role/add.tsx";
 import * as $7 from "./routes/roles.tsx";
 
 const manifest = {
@@ -17,9 +17,9 @@ const manifest = {
     "./routes/index.tsx": $1,
     "./routes/role/[id].tsx": $2,
     "./routes/role/[id]/edit.tsx": $3,
-    "./routes/role/[id]/notes.tsx": $4,
-    "./routes/role/add.tsx": $5,
-    "./routes/role/note/add.tsx": $6,
+    "./routes/role/[id]/note/add.tsx": $4,
+    "./routes/role/[id]/notes.tsx": $5,
+    "./routes/role/add.tsx": $6,
     "./routes/roles.tsx": $7,
   },
   islands: {},

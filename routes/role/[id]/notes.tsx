@@ -4,7 +4,6 @@ import { getNotes } from "../../../lib/store.ts";
 import { epochToLocale } from "../../../lib/utils.ts";
 import NewNoteContainer from "../../../components/NewNoteContainer.tsx";
 
-// Returns hypermedia that will replace a container from whence it was called.
 export const handler: Handlers = {
   async GET(req, _ctx) {
     const url = new URL(req.url);
@@ -13,12 +12,20 @@ export const handler: Handlers = {
     const roleId =  Number(url.pathname.split("/")[2]);
     const userId = "1"; // Hard-coded for testing.
     const notes = await getNotes(userId, roleId);
-    console.log(notes)
     const body = render(
       <>
-      <div id="note-container" class="mt-4">
-        <NewNoteContainer />
-        {notes.map((note) => (
+      {/* Use an event trigger of "newNote" to re-render the notes after a new
+          one has been added via the "Add Note" button.
+        */}
+      <div
+        id="note-container"
+        class="mt-4"
+        hx-get={url.pathname}
+        hx-trigger="newNote from:body"
+      >
+        <NewNoteContainer roleId={roleId}/>
+        {/* Reverse chronological order */}
+        {notes.reverse().map((note) => (
           <div class="w-full mt-1 p-2 border border-solid rounded-lg text-sm flex justify-start border-gray-400">
               <div class="px-2 text-white bg-emerald-500 rounded-full">
                 {epochToLocale(note["created-at"])}

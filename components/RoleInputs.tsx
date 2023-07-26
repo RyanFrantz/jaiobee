@@ -86,7 +86,7 @@ export default function RoleInputs({role, action}) {
           {/* On add, pass created-at along as a hidden input. */}
           {isEditing ? (
           <div class="col-span-1 mt-2 mr-2">
-            <label for="created-at" class="block text-sm pr-1 underline">Date Added</label>
+            <label for="created-at" class="block text-sm pr-1 underline">Created</label>
             <span
               name="created-at"
               class="w-1/2 mt-1 text-sm"
@@ -96,7 +96,7 @@ export default function RoleInputs({role, action}) {
           </div>
           ) : (
           <div class="invisible col-span-1 mt-2 mr-2">
-            <label for="created-at" class="block text-sm pr-1 underline">Date Added</label>
+            <label for="created-at" class="block text-sm pr-1 underline">Created</label>
             <input
               type="number"
               name="created-at"

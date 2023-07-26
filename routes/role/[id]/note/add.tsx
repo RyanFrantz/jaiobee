@@ -10,14 +10,18 @@ export const handler: Handlers = {
     const roleId =  Number(url.pathname.split("/")[2]);
     const userId = "1"; // Hard-coded for testing.
     const formData = await req.formData();
-    console.log(formData);
     const inputs = {};
     for (const [key, value] of formData.entries()) {
         inputs[key] = value;
     }
-    const note = makeNote(inputs["new-note"]);
-    // FIXME: Test for failure.
-    await addNote(userId, roleId, note)
+
+    // Only add a note if there _is_ one.
+    if (inputs["new-note"].length > 0) {
+      const note = makeNote(inputs["new-note"]);
+      // FIXME: Test for failure.
+      await addNote(userId, roleId, note)
+    }
+
     const headers = new Headers();
     // This should trigger an event on the page that called this endpoint which
     // wil refresh the notes.

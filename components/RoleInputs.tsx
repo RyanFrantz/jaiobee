@@ -105,6 +105,18 @@ export default function RoleInputs({role, action}) {
             />
           </div>
           )}
+          {/* I also don't have plans to expose "updated-at" in the form.
+            * Keep it secret. Keep it safe.
+            */}
+          <div class="invisible col-span-1 mt-2 mr-2">
+            <label for="updated-at" class="block text-sm pr-1 underline">Last Updated</label>
+            <input
+              type="number"
+              name="updated-at"
+              class="w-1/2 mt-1 text-sm"
+              value={role["updated-at"]}
+            />
+          </div>
 
           <div class="col-span-1 mt-2 mr-2">
             <label for="referral-contact" class="block text-sm pr-1">Referral Contact</label>

@@ -175,7 +175,7 @@ const roleChanges = (existingRole, newRole) => {
   const changes = [];
   for (const key of Object.keys(existingRole)) {
     if (existingRole[key] !== newRole[key]) {
-      if (key == "created-at") { // Never changed on update.
+      if (key == "created-at" || key == "updated-at") { // Never changed on update.
         continue;
       }
       changes.push(`${friendlyRoleProperties[key]} changed from "${existingRole[key]}" to "${newRole[key]}"`)
@@ -201,6 +201,7 @@ const updateRole = async (userId: string, roleId: number, role): [number, object
     // Merge the updated role properties with the existing role.
     // This ensures the "created-at" property is retained.
     const updatedRole = Object.assign(existingRole, role);
+    updatedRole["updated-at"] = epoch();
     const kv = await Deno.openKv();
     try {
       // Replace the role entirely.

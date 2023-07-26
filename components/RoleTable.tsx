@@ -47,7 +47,7 @@ export default function RoleTable({roles}) {
               </a>
             </td>
             <td class="p-4">{role.company}</td>
-            <td class="p-4">{epochToLocale(role["created-at"])}</td>
+            <td class="p-4">{epochToLocale(role["updated-at"])}</td>
             <td class="p-4">{role.status}</td>
           </tr>
           ))} 

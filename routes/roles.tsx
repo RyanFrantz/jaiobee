@@ -4,24 +4,25 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 // Hence RoleTable rather than Roles below.
 import RoleTable from "../components/RoleTable.tsx";
 import AddRoleButton from "../components/AddRoleButton.tsx";
-import { getRoles } from "../lib/store.ts";
+import { getRoles, getNoteActivity } from "../lib/store.ts";
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
     // TODO: Look up roles.
     const userId = "1"; // Hard-coded for testing.
     const roles = await getRoles(userId);
-    return await ctx.render({roles});
+    const noteActivity = await getNoteActivity(userId);
+    return await ctx.render({roles, noteActivity});
   },
 };
 
 export default function Roles(props: PageProps) {
-  const { roles } = props.data;
+  const { roles, noteActivity } = props.data;
   return (
     <>
     <div id="roles-container">
       <AddRoleButton />
-      <RoleTable roles={roles}/>
+      <RoleTable roles={roles} noteActivity={noteActivity} />
     </div>
     </>
   );

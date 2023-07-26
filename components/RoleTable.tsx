@@ -5,7 +5,7 @@ import { epochToLocale } from "../lib/utils.ts";
 // https://tailwindcss.com/docs/display#table
 
 // TODO: Don't show sort arrow if that column is the one that we're sorting on.
-export default function RoleTable({roles}) {
+export default function RoleTable({roles, noteActivity}) {
   return (
     <>
     <div class="border border-solid border-gray-400 rounded-b-lg px-4">
@@ -47,7 +47,7 @@ export default function RoleTable({roles}) {
               </a>
             </td>
             <td class="p-4">{role.company}</td>
-            <td class="p-4">{epochToLocale(role["updated-at"])}</td>
+            <td class="p-4">{epochToLocale(Math.max(role["updated-at"], noteActivity[role.id]))}</td>
             <td class="p-4">{role.status}</td>
           </tr>
           ))} 

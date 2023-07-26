@@ -125,6 +125,34 @@ const makeNote = (message: string) => {
   };
 };
 
+// Update a record representing the last time a role had a note added.
+// This is sort of like a "join" table that helps us avoid querying all notes
+// for every role just to find the last activity.
+const updateNoteActivity = async (userId: string, roleId: number, epoch: number) => {
+  const kv = await Deno.openKv();
+  try {
+    await kv.set([userId, "noteActivity", roleId], epoch);
+  } catch (err) {
+    console.log(`Failed to update note activity on role ${roleId} for userId ${userId}: ${err}`);
+  } finally {
+    kv.close()
+  }
+};
+
+// Fetches all note activity values. Returns an object whose values represent
+// the last activity timestamp for a role's notes, keyed by role ID.
+const getNoteActivity = async (userId: string) => {
+  const kv = await Deno.openKv();
+  const activity = {}
+  const entries = await kv.list({prefix: [userId, "noteActivity"]});
+  for await (const entry of entries) {
+    const roleId = entry.key.slice(-1); // roleId is the last part of the key.
+    activity[roleId] = entry.value;
+  }
+  kv.close();
+  return activity;
+}
+
 const addNote = async (userId: string, roleId: number, note): [number, object] => {
   const notes = await getNotes(userId, roleId);
   const noteIds = notes.map((r) => r.id);
@@ -157,6 +185,7 @@ const addNote = async (userId: string, roleId: number, note): [number, object] =
   } finally {
     kv.close();
   }
+  await updateNoteActivity(userId, roleId, epoch());
   return [statusCode, response];
 };
 
@@ -220,4 +249,13 @@ const updateRole = async (userId: string, roleId: number, role): [number, object
 }
 
 // TODO: Add getRole(userId, roleId). Pair with /routes/role/[id].tsx
-export { addRole, getRoles, getRole, updateRole, addNote, getNotes, makeNote };
+export {
+  addRole,
+  getRoles,
+  getRole,
+  updateRole,
+  addNote,
+  getNotes,
+  makeNote,
+  getNoteActivity
+};

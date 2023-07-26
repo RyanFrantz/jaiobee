@@ -175,7 +175,8 @@ const roleChanges = (existingRole, newRole) => {
   const changes = [];
   for (const key of Object.keys(existingRole)) {
     if (existingRole[key] !== newRole[key]) {
-      if (key == "created-at" || key == "updated-at") { // Never changed on update.
+      // Never directly changed by form inputs.
+      if (key == "created-at" || key == "updated-at") {
         continue;
       }
       changes.push(`${friendlyRoleProperties[key]} changed from "${existingRole[key]}" to "${newRole[key]}"`)

@@ -38,7 +38,7 @@ export const handler: Handlers = {
 export default function AddRole() {
   // The user is adding the role for the first time so we'll populate a
   // near-empty role boject with today's date (epoch).
-  const role = {"date-added": epoch()}
+  const role = {"created-at": epoch()}
   return (
     <div id="role-container">
       <SaveRoleButton />

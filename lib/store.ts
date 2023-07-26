@@ -13,7 +13,7 @@ const getRoles = async (userId: string) => {
         company: "Coca-Cola",
         "job-posting-url": "",
         description: "",
-        "date-added": "",
+        "created-at": "",
         "referral-contact": "",
         "recruiter-contact": "",
         id: 4
@@ -21,7 +21,7 @@ const getRoles = async (userId: string) => {
       versionstamp: "00000000000000040000"
     }
     */
-    //kv.delete(entry.key); // Only used when testing!!!
+    //await kv.delete(entry.key); // Only used when testing!!!
     roles.push(entry.value);
   }
   kv.close();
@@ -41,6 +41,7 @@ const getNotes = async (userId: string, roleId: number) => {
       versionstamp: "000000000000005d0000"
     }
      */
+    //await kv.delete(entry.key); // Only used in testing!!
     notes.push(entry.value);
   }
   kv.close();
@@ -75,13 +76,22 @@ const addRole = async (userId: string, role): [number, object] => {
     nextId = 1;
   }
   role.id = nextId;
-  if ("date-added" in role && role["date-added"].length == 0) {
+  if ("created-at" in role && role["created-at"].length == 0) {
     // Set it by default.
-    role["date-added"] = epoch();
+    role["created-at"] = epoch();
   } else {
-    // The value of "date-added" should be a number but the form passed it
+    // The value of "created-at" should be a number but the form passed it
     // as a string.
-    role["date-added"] = parseInt(role["date-added"]);
+    role["created-at"] = parseInt(role["created-at"]);
+  }
+  // FIXME: I'm being lazy with this copypasta.
+  if ("updated-at" in role && role["updated-at"].length == 0) {
+    // Set it by default.
+    role["updated-at"] = epoch();
+  } else {
+    // The value of "updated-at" should be a number but the form passed it
+    // as a string.
+    role["updated-at"] = parseInt(role["updated-at"]);
   }
   let [ statusCode, response ] = [ 201, {} ]; // Sane default/starting point.
   const kv = await Deno.openKv();
@@ -165,7 +175,7 @@ const roleChanges = (existingRole, newRole) => {
   const changes = [];
   for (const key of Object.keys(existingRole)) {
     if (existingRole[key] !== newRole[key]) {
-      if (key == "date-added") { // Never changed on update.
+      if (key == "created-at") { // Never changed on update.
         continue;
       }
       changes.push(`${friendlyRoleProperties[key]} changed from "${existingRole[key]}" to "${newRole[key]}"`)
@@ -189,7 +199,7 @@ const updateRole = async (userId: string, roleId: number, role): [number, object
       }
     }
     // Merge the updated role properties with the existing role.
-    // This ensures the "date-added" property is retained.
+    // This ensures the "created-at" property is retained.
     const updatedRole = Object.assign(existingRole, role);
     const kv = await Deno.openKv();
     try {

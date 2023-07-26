@@ -107,6 +107,14 @@ const addRole = async (userId: string, role): [number, object] => {
   return [statusCode, response];
 };
 
+// Given a string, generates a note object.
+const makeNote = (message: string) => {
+  return {
+    "created-at": epoch(),
+    message: message
+  };
+};
+
 const addNote = async (userId: string, roleId: number, note): [number, object] => {
   const notes = await getNotes(userId, roleId);
   const noteIds = notes.map((r) => r.id);
@@ -142,12 +150,44 @@ const addNote = async (userId: string, roleId: number, note): [number, object] =
   return [statusCode, response];
 };
 
+const friendlyRoleProperties = {
+  title: "Title",
+  company: "Company",
+  status: "Status",
+  "job-posting-url": "Job Posting",
+  description: "Description",
+  "referral-contact": "Referral Contact",
+  "recruiter-contact": "Recruiter Contact",
+};
+// A very naive solution to finding differences between objects.
+// Returns an array of strings describing what has changed.
+const roleChanges = (existingRole, newRole) => {
+  const changes = [];
+  for (const key of Object.keys(existingRole)) {
+    if (existingRole[key] !== newRole[key]) {
+      if (key == "date-added") { // Never changed on update.
+        continue;
+      }
+      changes.push(`${friendlyRoleProperties[key]} changed from "${existingRole[key]}" to "${newRole[key]}"`)
+    }
+  }
+  return changes;
+};
+
 const updateRole = async (userId: string, roleId: number, role): [number, object] => {
   const [getRoleStatusCode, existingRole] = await getRole(userId, roleId);
   // The ID is not part of the form data so we add it back, here.
   role.id = roleId;
   let [ statusCode, response ] = [ 200, {} ]; // Sane default/starting point.
   if (getRoleStatusCode == 200) {
+    const changes = roleChanges(existingRole, role);
+    if (changes.length > 0) {
+      // FIXME: Test for failure.
+      for (const change of changes) {
+        const note = makeNote(change)
+        await addNote(userId, roleId, note);
+      }
+    }
     // Merge the updated role properties with the existing role.
     // This ensures the "date-added" property is retained.
     const updatedRole = Object.assign(existingRole, role);

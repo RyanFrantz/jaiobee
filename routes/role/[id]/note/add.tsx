@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { addNote } from "../../../../lib/store.ts";
-import { epoch } from "../../../../lib/utils.ts";
+import { makeNote } from "../../../../lib/store.ts";
 
 export const handler: Handlers = {
   async POST(req) {
@@ -15,10 +15,7 @@ export const handler: Handlers = {
     for (const [key, value] of formData.entries()) {
         inputs[key] = value;
     }
-    const note = {
-        "created-at": epoch(),
-        message: inputs["new-note"]
-      }
+    const note = makeNote(inputs["new-note"]);
     // FIXME: Test for failure.
     await addNote(userId, roleId, note)
     const headers = new Headers();

@@ -109,7 +109,7 @@ const addRole = async (userId: string, role): [number, object] => {
 
   // First note!
   const note = {
-    "created-at": epoch(),
+    "created-at": role["created-at"],
     message: "Added role."
   }
   await addNote(userId, role.id, note);

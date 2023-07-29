@@ -6,15 +6,15 @@ export default function Header() {
         <div class="flex justify-between">
           <div class="flex h-16 items-center">
             <a href="/roles" class="m-4 px-2 hover:bg-gray-300 rounded-full">
-            Roles
+              Roles
             </a>
             <a href="/contacts" class="m-4 px-2 hover:bg-gray-300 rounded-full">
-            Contacts
+              Contacts
             </a>
           </div>
           <div class="flex items-center">
             <a href="/account" class="px-2 hover:bg-gray-300 rounded-full">
-            Account
+              Account
             </a>
           </div>
         </div>

@@ -12,7 +12,7 @@ export const handler: Handlers = {
     const formData = await req.formData();
     const role = {};
     for (const [key, value] of formData.entries()) {
-        role[key] = value;
+      role[key] = value;
     }
     const userId = "1"; // Hard-coding for testing.
     const [statusCode, response] = await addRole(userId, role);
@@ -26,11 +26,10 @@ export const handler: Handlers = {
         status: 303, // See Other
         headers,
       });
-
     }
 
     return new Response(null, {
-      status: 404 // blanket response, for now
+      status: 404, // blanket response, for now
     });
   },
 };
@@ -39,11 +38,11 @@ export default function AddRole() {
   // The user is adding the role for the first time so we'll pre-populate the
   // important bits.
   const now = epoch();
-  const role = {"created-at": now, "updated-at": now}
+  const role = { "created-at": now, "updated-at": now };
   return (
     <div id="role-container">
       <SaveRoleButton />
-      <RoleForm role={role} action="add"/>
+      <RoleForm role={role} action="add" />
     </div>
   );
 }

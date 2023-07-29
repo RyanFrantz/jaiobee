@@ -10,27 +10,26 @@ export const handler: Handlers = {
     const url = new URL(req.url);
     // /role/8/edit
     //       ^
-    const roleId =  Number(url.pathname.split("/")[2]);
+    const roleId = Number(url.pathname.split("/")[2]);
     const userId = "1"; // Hard-coded for testing.
     let [statusCode, role] = await getRole(userId, roleId);
-    if ( statusCode !== 200 ) {
+    if (statusCode !== 200) {
       role = {};
     }
     // Let's give hypermedia a whirl, here.
     const body = render(
       <div id="role-container">
         <EditButtonRow roleId={roleId} />
-        <RoleForm role={role} action="edit"/>
-      </div>
+        <RoleForm role={role} action="edit" />
+      </div>,
     );
     const headers = new Headers();
     headers.set("content-type", "text/html");
     return new Response(
       body,
       {
-        headers: headers
-      }
+        headers: headers,
+      },
     );
-    
   },
 };

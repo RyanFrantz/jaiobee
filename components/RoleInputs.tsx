@@ -8,11 +8,11 @@ const statusTypes = {
   passed: "Passed",
 };
 
-export default function RoleInputs({role, action}) {
+export default function RoleInputs({ role, action }) {
   // Possible action values are "add" and "edit" because this form is used
   // to add new roles as well as edit existing roles.
-  const isEditing = (action == "edit");
-  console.log(role)
+  const isEditing = action == "edit";
+  console.log(role);
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
   return (
@@ -48,18 +48,20 @@ export default function RoleInputs({role, action}) {
               name="status"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
             >
-              {Object.entries(statusTypes).map(([status, label]) =>
-              <option
-                value={status}
-                selected={role.status == status}
-              >
-                {label}
-              </option>
-              )}
+              {Object.entries(statusTypes).map(([status, label]) => (
+                <option
+                  value={status}
+                  selected={role.status == status}
+                >
+                  {label}
+                </option>
+              ))}
             </select>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">
-            <label for="job-posting-url" class="block text-sm pr-1">Job Posting</label>
+            <label for="job-posting-url" class="block text-sm pr-1">
+              Job Posting
+            </label>
             <input
               type="url"
               name="job-posting-url"
@@ -70,13 +72,15 @@ export default function RoleInputs({role, action}) {
             />
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">
-            <label for="description" class="block text-sm pr-1">Description</label>
+            <label for="description" class="block text-sm pr-1">
+              Description
+            </label>
             <textarea
               rows="3"
               name="description"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
             >
-            {role?.description}
+              {role?.description}
             </textarea>
           </div>
         </div>
@@ -84,32 +88,42 @@ export default function RoleInputs({role, action}) {
         <div class="w-full p-4 grid grid-cols-1">
           {/* We don't support editing the date the role was added. Just display it. */}
           {/* On add, pass created-at along as a hidden input. */}
-          {isEditing ? (
-          <div class="col-span-1 mt-2 mr-2">
-            <label for="created-at" class="block text-sm pr-1 underline">Created</label>
-            <span
-              name="created-at"
-              class="w-1/2 mt-1 text-sm"
-            >
-            {epochToLocale(role["created-at"])}
-            </span>
-          </div>
-          ) : (
-          <div class="invisible col-span-1 mt-2 mr-2">
-            <label for="created-at" class="block text-sm pr-1 underline">Created</label>
-            <input
-              type="number"
-              name="created-at"
-              class="w-1/2 mt-1 text-sm"
-              value={role["created-at"]}
-            />
-          </div>
-          )}
-          {/* I also don't have plans to expose "updated-at" in the form.
+          {isEditing
+            ? (
+              <div class="col-span-1 mt-2 mr-2">
+                <label for="created-at" class="block text-sm pr-1 underline">
+                  Created
+                </label>
+                <span
+                  name="created-at"
+                  class="w-1/2 mt-1 text-sm"
+                >
+                  {epochToLocale(role["created-at"])}
+                </span>
+              </div>
+            )
+            : (
+              <div class="invisible col-span-1 mt-2 mr-2">
+                <label for="created-at" class="block text-sm pr-1 underline">
+                  Created
+                </label>
+                <input
+                  type="number"
+                  name="created-at"
+                  class="w-1/2 mt-1 text-sm"
+                  value={role["created-at"]}
+                />
+              </div>
+            )}
+          {
+            /* I also don't have plans to expose "updated-at" in the form.
             * Keep it secret. Keep it safe.
-            */}
+            */
+          }
           <div class="invisible col-span-1 mt-2 mr-2">
-            <label for="updated-at" class="block text-sm pr-1 underline">Last Updated</label>
+            <label for="updated-at" class="block text-sm pr-1 underline">
+              Last Updated
+            </label>
             <input
               type="number"
               name="updated-at"
@@ -119,7 +133,9 @@ export default function RoleInputs({role, action}) {
           </div>
 
           <div class="col-span-1 mt-2 mr-2">
-            <label for="referral-contact" class="block text-sm pr-1">Referral Contact</label>
+            <label for="referral-contact" class="block text-sm pr-1">
+              Referral Contact
+            </label>
             <input
               type="text"
               name="referral-contact"
@@ -128,7 +144,9 @@ export default function RoleInputs({role, action}) {
             />
           </div>
           <div class="col-span-1 mt-2 mr-2">
-            <label for="recruiter-contact" class="block text-sm pr-1">Recruiter Contact</label>
+            <label for="recruiter-contact" class="block text-sm pr-1">
+              Recruiter Contact
+            </label>
             <input
               type="text"
               name="recruiter-contact"

@@ -2,7 +2,7 @@ import { epoch } from "./utils.ts";
 
 const getRoles = async (userId: string) => {
   const kv = await Deno.openKv();
-  const entries = await kv.list({prefix: [userId, "roles"]}); // KvListIterator
+  const entries = await kv.list({ prefix: [userId, "roles"] }); // KvListIterator
   const roles = [];
   for await (const entry of entries) {
     /* Example of a role entry.
@@ -31,7 +31,7 @@ const getRoles = async (userId: string) => {
 // Return all notes associated with a role.
 const getNotes = async (userId: string, roleId: number) => {
   const kv = await Deno.openKv();
-  const entries = await kv.list({prefix: [userId, "notes", roleId]});
+  const entries = await kv.list({ prefix: [userId, "notes", roleId] });
   const notes = [];
   for await (const entry of entries) {
     /*
@@ -54,11 +54,11 @@ const getNotes = async (userId: string, roleId: number) => {
 const getRole = async (userId: string, roleId: number): [number, object] => {
   const kv = await Deno.openKv();
   const role = await kv.get([userId, "roles", roleId]);
-  kv.close()
+  kv.close();
   if (role) {
     return [200, role.value];
   } else {
-    return [404, { message: "Role not found."}];
+    return [404, { message: "Role not found." }];
   }
 };
 
@@ -66,7 +66,7 @@ const getRole = async (userId: string, roleId: number): [number, object] => {
 const addRole = async (userId: string, role): [number, object] => {
   const roles = await getRoles(userId);
   const roleIds = roles.map((r) => r.id);
-  const desc = (a,b) => {
+  const desc = (a, b) => {
     return b - a;
   };
   let nextId;
@@ -93,16 +93,16 @@ const addRole = async (userId: string, role): [number, object] => {
     // as a string.
     role["updated-at"] = parseInt(role["updated-at"]);
   }
-  let [ statusCode, response ] = [ 201, {} ]; // Sane default/starting point.
+  let [statusCode, response] = [201, {}]; // Sane default/starting point.
   const kv = await Deno.openKv();
   try {
     // The combination of user ID and role ID will be the key.
     await kv.set([userId, "roles", role.id], role);
     response = { roleId: nextId, message: "Role added successfully" };
   } catch (err) {
-      statusCode = 500;
-      response.message = err;
-      console.log(`Failed to add role for userId ${userId}: ${err}`);
+    statusCode = 500;
+    response.message = err;
+    console.log(`Failed to add role for userId ${userId}: ${err}`);
   } finally {
     kv.close();
   }
@@ -110,8 +110,8 @@ const addRole = async (userId: string, role): [number, object] => {
   // First note!
   const note = {
     "created-at": role["created-at"],
-    message: "Added role."
-  }
+    message: "Added role.",
+  };
   await addNote(userId, role.id, note);
 
   return [statusCode, response];
@@ -121,21 +121,27 @@ const addRole = async (userId: string, role): [number, object] => {
 const makeNote = (message: string) => {
   return {
     "created-at": epoch(),
-    message: message
+    message: message,
   };
 };
 
 // Update a record representing the last time a role had a note added.
 // This is sort of like a "join" table that helps us avoid querying all notes
 // for every role just to find the last activity.
-const updateNoteActivity = async (userId: string, roleId: number, epoch: number) => {
+const updateNoteActivity = async (
+  userId: string,
+  roleId: number,
+  epoch: number,
+) => {
   const kv = await Deno.openKv();
   try {
     await kv.set([userId, "noteActivity", roleId], epoch);
   } catch (err) {
-    console.log(`Failed to update note activity on role ${roleId} for userId ${userId}: ${err}`);
+    console.log(
+      `Failed to update note activity on role ${roleId} for userId ${userId}: ${err}`,
+    );
   } finally {
-    kv.close()
+    kv.close();
   }
 };
 
@@ -143,20 +149,24 @@ const updateNoteActivity = async (userId: string, roleId: number, epoch: number)
 // the last activity timestamp for a role's notes, keyed by role ID.
 const getNoteActivity = async (userId: string) => {
   const kv = await Deno.openKv();
-  const activity = {}
-  const entries = await kv.list({prefix: [userId, "noteActivity"]});
+  const activity = {};
+  const entries = await kv.list({ prefix: [userId, "noteActivity"] });
   for await (const entry of entries) {
     const roleId = entry.key.slice(-1); // roleId is the last part of the key.
     activity[roleId] = entry.value;
   }
   kv.close();
   return activity;
-}
+};
 
-const addNote = async (userId: string, roleId: number, note): [number, object] => {
+const addNote = async (
+  userId: string,
+  roleId: number,
+  note,
+): [number, object] => {
   const notes = await getNotes(userId, roleId);
   const noteIds = notes.map((r) => r.id);
-  const desc = (a,b) => {
+  const desc = (a, b) => {
     return b - a;
   };
   let nextId;
@@ -173,15 +183,17 @@ const addNote = async (userId: string, roleId: number, note): [number, object] =
     // Should be a number but the form passed it as a string.
     note["created-at"] = parseInt(note["created-at"]);
   }
-  let [ statusCode, response ] = [ 201, {} ]; // Sane default/starting point.
+  let [statusCode, response] = [201, {}]; // Sane default/starting point.
   const kv = await Deno.openKv();
   try {
     await kv.set([userId, "notes", roleId, note.id], note);
     response = { noteId: nextId, message: "Note added successfully" };
   } catch (err) {
-      statusCode = 500;
-      response.message = err;
-      console.log(`Failed to add note to role ${roleId} for userId ${userId}: ${err}`);
+    statusCode = 500;
+    response.message = err;
+    console.log(
+      `Failed to add note to role ${roleId} for userId ${userId}: ${err}`,
+    );
   } finally {
     kv.close();
   }
@@ -208,23 +220,31 @@ const roleChanges = (existingRole, newRole) => {
       if (key == "created-at" || key == "updated-at") {
         continue;
       }
-      changes.push(`${friendlyRoleProperties[key]} changed from "${existingRole[key]}" to "${newRole[key]}"`)
+      changes.push(
+        `${friendlyRoleProperties[key]} changed from "${
+          existingRole[key]
+        }" to "${newRole[key]}"`,
+      );
     }
   }
   return changes;
 };
 
-const updateRole = async (userId: string, roleId: number, role): [number, object] => {
+const updateRole = async (
+  userId: string,
+  roleId: number,
+  role,
+): [number, object] => {
   const [getRoleStatusCode, existingRole] = await getRole(userId, roleId);
   // The ID is not part of the form data so we add it back, here.
   role.id = roleId;
-  let [ statusCode, response ] = [ 200, {} ]; // Sane default/starting point.
+  let [statusCode, response] = [200, {}]; // Sane default/starting point.
   if (getRoleStatusCode == 200) {
     const changes = roleChanges(existingRole, role);
     if (changes.length > 0) {
       // FIXME: Test for failure.
       for (const change of changes) {
-        const note = makeNote(change)
+        const note = makeNote(change);
         await addNote(userId, roleId, note);
       }
     }
@@ -238,24 +258,24 @@ const updateRole = async (userId: string, roleId: number, role): [number, object
       await kv.set([userId, "roles", roleId], updatedRole);
       response = { roleId: roleId, message: "Role updated successfully" };
     } catch (err) {
-        statusCode = 500;
-        response.message = err;
-        console.log(`Failed to update role for userId ${userId}: ${err}`);
+      statusCode = 500;
+      response.message = err;
+      console.log(`Failed to update role for userId ${userId}: ${err}`);
     } finally {
       kv.close();
     }
   }
-  return [ statusCode, response ];
-}
+  return [statusCode, response];
+};
 
 // TODO: Add getRole(userId, roleId). Pair with /routes/role/[id].tsx
 export {
-  addRole,
-  getRoles,
-  getRole,
-  updateRole,
   addNote,
+  addRole,
+  getNoteActivity,
   getNotes,
+  getRole,
+  getRoles,
   makeNote,
-  getNoteActivity
+  updateRole,
 };

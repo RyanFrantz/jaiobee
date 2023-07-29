@@ -6,7 +6,7 @@ export default function SaveRoleButton() {
         form="add-role"
         class="my-1 px-2 rounded bg-sky-500 hover:bg-sky-600 text-white text-sm"
       >
-      Save Role
+        Save Role
       </button>
     </div>
   );

@@ -10,10 +10,10 @@ export const handler: Handlers = {
     const roleId = Number(url.pathname.split("/role/")[1]);
     const userId = "1"; // Hard-coded for testing.
     let [statusCode, role] = await getRole(userId, roleId);
-    if ( statusCode !== 200 ) {
+    if (statusCode !== 200) {
       role = {};
     }
-    const props = {...ctx.state, role: role, roleId: roleId};
+    const props = { ...ctx.state, role: role, roleId: roleId };
     return ctx.render(props);
   },
 
@@ -23,7 +23,7 @@ export const handler: Handlers = {
     const formData = await req.formData();
     const role = {};
     for (const [key, value] of formData.entries()) {
-        role[key] = value;
+      role[key] = value;
     }
     const roleId = Number(url.pathname.split("/role/")[1]);
     const userId = "1"; // Hard-coding for testing.
@@ -38,11 +38,10 @@ export const handler: Handlers = {
         status: 303, // See Other
         headers,
       });
-
     }
 
     return new Response(null, {
-      status: 404 // blanket response, for now
+      status: 404, // blanket response, for now
     });
   },
 };
@@ -53,11 +52,15 @@ export default function Role(props) {
     <>
       <div id="role-container">
         <EditRoleButton roleId={roleId} />
-        <RoleDetails role={role}/>
+        <RoleDetails role={role} />
       </div>
-      <div id="note-container" class="mt-4"
-        hx-get={"/role/" + roleId + "/notes"} hx-trigger="load"
-        hx-target="#note-container" hx-swap="outerHTML"
+      <div
+        id="note-container"
+        class="mt-4"
+        hx-get={"/role/" + roleId + "/notes"}
+        hx-trigger="load"
+        hx-target="#note-container"
+        hx-swap="outerHTML"
       >
       </div>
     </>

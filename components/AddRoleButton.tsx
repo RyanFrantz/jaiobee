@@ -9,7 +9,7 @@ export default function AddRoleButton() {
     <div class="flex justify-end m-2">
       <a href="/role/add">
         <button class="px-2 rounded bg-sky-500 hover:bg-sky-600 text-white text-sm">
-        Add Role
+          Add Role
         </button>
       </a>
     </div>

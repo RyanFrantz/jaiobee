@@ -1,7 +1,7 @@
 // Return the milliseconds since epoch.
 const epoch = () => {
   return Date.now();
-}
+};
 
 /*
 > e = new Date(1689627698000)
@@ -21,6 +21,6 @@ const epochToLocale = (epoch: string): string => {
   const millis = parseInt(epoch);
   const d = new Date(millis);
   return d.toLocaleString(); // TODO: You know! Timezones!
-}
+};
 
 export { epoch, epochToLocale };

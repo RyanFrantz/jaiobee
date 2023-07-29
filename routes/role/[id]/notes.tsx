@@ -9,43 +9,44 @@ export const handler: Handlers = {
     const url = new URL(req.url);
     // /role/8/notes
     //       ^
-    const roleId =  Number(url.pathname.split("/")[2]);
+    const roleId = Number(url.pathname.split("/")[2]);
     const userId = "1"; // Hard-coded for testing.
     const notes = await getNotes(userId, roleId);
     const body = render(
       <>
-      {/* Use an event trigger of "newNote" to re-render the notes after a new
+        {
+          /* Use an event trigger of "newNote" to re-render the notes after a new
           one has been added via the "Add Note" button.
-        */}
-      <div
-        id="note-container"
-        class="mt-4"
-        hx-get={url.pathname}
-        hx-trigger="newNote from:body"
-      >
-        <NewNoteContainer roleId={roleId}/>
-        {/* Reverse chronological order */}
-        {notes.reverse().map((note) => (
-          <div class="w-full mt-1 p-2 border border-solid rounded-lg text-sm flex justify-start border-gray-400">
+        */
+        }
+        <div
+          id="note-container"
+          class="mt-4"
+          hx-get={url.pathname}
+          hx-trigger="newNote from:body"
+        >
+          <NewNoteContainer roleId={roleId} />
+          {/* Reverse chronological order */}
+          {notes.reverse().map((note) => (
+            <div class="w-full mt-1 p-2 border border-solid rounded-lg text-sm flex justify-start border-gray-400">
               <div class="px-2 text-white bg-emerald-500 rounded-full">
                 {epochToLocale(note["created-at"])}
               </div>
               <div class="mx-2">
-              {note.message}
+                {note.message}
               </div>
-          </div>
-        ))}
-      </div>
-      </>
+            </div>
+          ))}
+        </div>
+      </>,
     );
     const headers = new Headers();
     headers.set("content-type", "text/html");
     return new Response(
       body,
       {
-        headers: headers
-      }
+        headers: headers,
+      },
     );
-    
   },
 };

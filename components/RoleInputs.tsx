@@ -12,7 +12,6 @@ export default function RoleInputs({ role, action }) {
   // Possible action values are "add" and "edit" because this form is used
   // to add new roles as well as edit existing roles.
   const isEditing = action == "edit";
-  console.log(role);
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
   return (

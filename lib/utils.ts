@@ -23,4 +23,22 @@ const epochToLocale = (epoch: string): string => {
   return d.toLocaleString(); // TODO: You know! Timezones!
 };
 
-export { epoch, epochToLocale };
+/* A set of regular expressions representing routes we'll use to check for
+ * the presence of a cookie.
+ * NOTE: This being the top-level middleware, we'll omit some routes we
+ * want to protect and instead do something similar in lower-level
+ * middleware.
+ * For example, /api routes will be protected in in routes/api/_middleware.ts.
+ */
+const protectedRoutes = [
+  /^\/role/,
+];
+
+// Returns truthy if a URL path matches a protected route; falsy otherwise.
+// Useful to avoid doing work like validating JWTs on resources like static
+// assets and /_frsh/
+const isProtectedRoute = (path) => {
+  return protectedRoutes.find(re => path.match(re));
+};
+
+export { epoch, epochToLocale, isProtectedRoute };

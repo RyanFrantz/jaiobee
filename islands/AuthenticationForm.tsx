@@ -1,12 +1,20 @@
 export default function AuthenticationForm({ signup }) {
   return (
-    <>
+    <div
+      class="flex flex-1 flex-col justify-center px-6 py-12"
+    >
       {signup
         ? (
-          <div class="signup-form">
+          <div id="signup-form">
             <form method="post" action="/api/signup">
-              <label for="email">Email</label>
+              <label
+                for="email"
+                class="mr-2"
+              >
+                Email
+              </label>
               <input
+                class="border border-solid border-gray-400 rounded-lg p-2"
                 type="email"
                 name="email"
                 placeholder="jane@hireme.com"
@@ -14,8 +22,14 @@ export default function AuthenticationForm({ signup }) {
                 pattern="^[A-Za-z0-9._+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
                 required
               />
-              <label for="password">Password</label>
+              <label
+                for="password"
+                class="mr-2"
+              >
+                Password
+              </label>
               <input
+                class="border border-solid border-gray-400 rounded-lg p-2"
                 type="password"
                 name="password"
                 autocomplete="new-password"
@@ -31,10 +45,22 @@ export default function AuthenticationForm({ signup }) {
           </div>
         )
         : (
-          <div class="login-form">
+          <div
+            id="login-form"
+            class="mx-auto flex flex-1 flex-col justify-center border border-solid border-gray-400 rounded-lg p-6"
+          >
             <form method="post" action="/api/login">
-              <label for="email">Email</label>
+              <div>
+              <label
+                for="email"
+                class="mt-2"
+              >
+                Email
+              </label>
+              </div>
+              <div>
               <input
+                class="mt-1 border border-solid border-gray-400 rounded-lg p-2"
                 type="email"
                 name="email"
                 placeholder="jane@hireme.com"
@@ -42,20 +68,39 @@ export default function AuthenticationForm({ signup }) {
                 pattern="^[A-Za-z0-9._+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
                 required
               />
-              <label for="password">Password</label>
+              </div>
+              <div>
+              <label
+                for="password"
+                class="mt-2"
+              >
+                Password
+              </label>
+              </div>
+              <div>
               <input
+                class="mt-1 border border-solid border-gray-400 rounded-lg p-2"
                 type="password"
                 name="password"
                 required
               />
-              <br />
-              <button type="submit">Login</button>
+              </div>
+              <div>
+              <button
+                type="submit"
+                class="mt-2 text-white bg-sky-500 hover:bg-sky-600 px-2 rounded"
+              >
+                Login
+              </button>
+              </div>
             </form>
-            <p>
-              Don't have an account? <a href="/signup">Sign up here!</a>
+            <p
+              class="mt-10 text-center text-sm"
+            >
+              Don't have an account? <a href="/signup" class="text-blue-600 underline">Sign up here!</a>
             </p>
           </div>
         )}
-    </>
+    </div>
   );
 }

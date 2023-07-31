@@ -18,7 +18,7 @@ export default function AuthenticationForm({ signup }) {
           </div>
           <div>
             <input
-              class="mt-1 border border-solid border-gray-400 rounded-lg p-2"
+              class="w-full mt-1 border border-solid border-gray-400 rounded-lg p-2"
               type="email"
               name="email"
               placeholder="jane@hireme.com"
@@ -37,7 +37,7 @@ export default function AuthenticationForm({ signup }) {
           </div>
           <div>
             <input
-              class="mt-1 border border-solid border-gray-400 rounded-lg p-2"
+              class="w-full mt-1 border border-solid border-gray-400 rounded-lg p-2"
               type="password"
               name="password"
               required
@@ -46,7 +46,7 @@ export default function AuthenticationForm({ signup }) {
           <div>
             <button
               type="submit"
-              class="mt-2 text-white bg-sky-500 hover:bg-sky-600 px-2 rounded"
+              class="w-full mt-2 text-white bg-sky-500 hover:bg-sky-600 px-2 rounded flex justify-center"
             >
               {signup ? "Create Account" : "Login"}
             </button>

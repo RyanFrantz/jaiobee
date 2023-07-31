@@ -38,7 +38,7 @@ const protectedRoutes = [
 // Useful to avoid doing work like validating JWTs on resources like static
 // assets and /_frsh/
 const isProtectedRoute = (path) => {
-  return protectedRoutes.find(re => path.match(re));
+  return protectedRoutes.find((re) => path.match(re));
 };
 
 export { epoch, epochToLocale, isProtectedRoute };

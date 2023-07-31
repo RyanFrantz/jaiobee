@@ -1,11 +1,11 @@
-// asset() will automate adding cache headers to statiic assets.
+// asset() will automate adding cache headers to static assets.
 import { asset, Head } from "$fresh/runtime.ts";
 import { AppProps } from "$fresh/src/server/types.ts";
 import Header from "../components/Header.tsx";
-import { isProtectedRoute } from "../lib/utils.ts";
+import { isAuthenticating } from "../lib/utils.ts";
 
 export default function App({ Component, route }: AppProps) {
-  const isProtected = isProtectedRoute(route);
+  const isAuthnPath = isAuthenticating(route);
   return (
     <>
       <Head>
@@ -16,7 +16,7 @@ export default function App({ Component, route }: AppProps) {
         <div class="px-6 py-12">
           <div class="text-lg">
             <div class="flex flex-col min-h-screen mx-auto max-w-7xl w-full">
-              {isProtected ? <Header /> : <div></div>}
+              <Header isAuthenticating={isAuthnPath} />
               <Component />
               {/* Future footer */}
             </div>

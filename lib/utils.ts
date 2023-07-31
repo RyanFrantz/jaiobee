@@ -41,4 +41,9 @@ const isProtectedRoute = (path) => {
   return protectedRoutes.find((re) => path.match(re));
 };
 
-export { epoch, epochToLocale, isProtectedRoute };
+// Returns truthy if a URL path matches one of our authentication-related routes.
+const isAuthenticating = (path) => {
+  const authnPaths = /^\/(login|signup)$/;
+  return path.match(authnPaths);
+};
+export { epoch, epochToLocale, isAuthenticating, isProtectedRoute };

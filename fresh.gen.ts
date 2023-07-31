@@ -4,34 +4,36 @@
 
 import * as $0 from "./routes/_app.tsx";
 import * as $1 from "./routes/_middleware.ts";
-import * as $2 from "./routes/api/login.ts";
-import * as $3 from "./routes/api/signup.ts";
-import * as $4 from "./routes/index.tsx";
-import * as $5 from "./routes/login.tsx";
-import * as $6 from "./routes/role/[id].tsx";
-import * as $7 from "./routes/role/[id]/edit.tsx";
-import * as $8 from "./routes/role/[id]/note/add.tsx";
-import * as $9 from "./routes/role/[id]/notes.tsx";
-import * as $10 from "./routes/role/add.tsx";
-import * as $11 from "./routes/roles.tsx";
-import * as $12 from "./routes/signup.tsx";
+import * as $2 from "./routes/api/_middleware.ts";
+import * as $3 from "./routes/api/login.ts";
+import * as $4 from "./routes/api/signup.ts";
+import * as $5 from "./routes/index.tsx";
+import * as $6 from "./routes/login.tsx";
+import * as $7 from "./routes/role/[id].tsx";
+import * as $8 from "./routes/role/[id]/edit.tsx";
+import * as $9 from "./routes/role/[id]/note/add.tsx";
+import * as $10 from "./routes/role/[id]/notes.tsx";
+import * as $11 from "./routes/role/add.tsx";
+import * as $12 from "./routes/roles.tsx";
+import * as $13 from "./routes/signup.tsx";
 import * as $$0 from "./islands/AuthenticationForm.tsx";
 
 const manifest = {
   routes: {
     "./routes/_app.tsx": $0,
     "./routes/_middleware.ts": $1,
-    "./routes/api/login.ts": $2,
-    "./routes/api/signup.ts": $3,
-    "./routes/index.tsx": $4,
-    "./routes/login.tsx": $5,
-    "./routes/role/[id].tsx": $6,
-    "./routes/role/[id]/edit.tsx": $7,
-    "./routes/role/[id]/note/add.tsx": $8,
-    "./routes/role/[id]/notes.tsx": $9,
-    "./routes/role/add.tsx": $10,
-    "./routes/roles.tsx": $11,
-    "./routes/signup.tsx": $12,
+    "./routes/api/_middleware.ts": $2,
+    "./routes/api/login.ts": $3,
+    "./routes/api/signup.ts": $4,
+    "./routes/index.tsx": $5,
+    "./routes/login.tsx": $6,
+    "./routes/role/[id].tsx": $7,
+    "./routes/role/[id]/edit.tsx": $8,
+    "./routes/role/[id]/note/add.tsx": $9,
+    "./routes/role/[id]/notes.tsx": $10,
+    "./routes/role/add.tsx": $11,
+    "./routes/roles.tsx": $12,
+    "./routes/signup.tsx": $13,
   },
   islands: {
     "./islands/AuthenticationForm.tsx": $$0,

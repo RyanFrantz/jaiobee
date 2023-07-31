@@ -25,7 +25,6 @@ export default function Login(props) {
                 <p>{error}. Let's try again!</p>
               </>
             )}
-          <h3>Let's create an account!</h3>
           <AuthenticationForm signup="true" />
         </div>
       )}

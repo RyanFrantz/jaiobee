@@ -14,7 +14,6 @@ export default function Login(props) {
     <>
       {activeSession ? <h3>You're already logged in!</h3> : (
         <div>
-          <h3>Let's get you logged in!</h3>
           <AuthenticationForm />
         </div>
       )}

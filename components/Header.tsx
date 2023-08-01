@@ -8,11 +8,9 @@ export default function Header({ isAuthenticating }) {
         <div class="flex justify-between">
           <div class="flex h-16 items-center">
             <a
-              href="/roles"
-              class={"m-4 px-2 hover:bg-gray-300 rounded-full" +
-                (isAuthenticating ? " invisible" : "")}
-            >
-              Roles
+              href={isAuthenticating ? "/" : "/roles"}
+              class="m-4 px-2 hover:bg-gray-300 rounded-full">
+              {isAuthenticating ? "Home" : "Roles"}
             </a>
             <a
               href="/contacts"

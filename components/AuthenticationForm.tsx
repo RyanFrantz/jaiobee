@@ -19,7 +19,7 @@ export default function AuthenticationForm({ signup }) {
               class="w-full mt-1 border border-solid border-gray-400 rounded-lg p-2"
               type="email"
               name="email"
-              placeholder="jane@hireme.com"
+              placeholder="jane@hire.me"
               autocomplete="email"
               pattern="^[A-Za-z0-9._+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
               required

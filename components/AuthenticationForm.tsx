@@ -1,5 +1,3 @@
-// FIXME: Dedupe all the elements.
-// FIXME: Make input box extend the width of their container.
 export default function AuthenticationForm({ signup }) {
   return (
     <div class="flex flex-1 flex-col justify-center px-6 py-12">

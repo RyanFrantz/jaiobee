@@ -1,4 +1,4 @@
-import AuthenticationForm from "../islands/AuthenticationForm.tsx";
+import AuthenticationForm from "../components/AuthenticationForm.tsx";
 import { Handlers } from "$fresh/server.ts";
 
 export const handler: Handlers = {

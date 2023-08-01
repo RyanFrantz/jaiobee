@@ -16,7 +16,6 @@ import * as $10 from "./routes/role/[id]/notes.tsx";
 import * as $11 from "./routes/role/add.tsx";
 import * as $12 from "./routes/roles.tsx";
 import * as $13 from "./routes/signup.tsx";
-import * as $$0 from "./islands/AuthenticationForm.tsx";
 
 const manifest = {
   routes: {
@@ -35,9 +34,7 @@ const manifest = {
     "./routes/roles.tsx": $12,
     "./routes/signup.tsx": $13,
   },
-  islands: {
-    "./islands/AuthenticationForm.tsx": $$0,
-  },
+  islands: {},
   baseUrl: import.meta.url,
 };
 

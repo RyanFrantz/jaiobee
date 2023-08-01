@@ -23,7 +23,9 @@ export default function Header({ isAuthenticating }) {
             </a>
           </div>
           <div class="flex items-center">
-            <a href="/account" class="px-2 hover:bg-gray-300 rounded-full">
+            <a href="/account" class={"px-2 hover:bg-gray-300 rounded-full" +
+                (isAuthenticating ? " invisible" : "")}
+            >
               Account
             </a>
           </div>

@@ -8,7 +8,7 @@ import { getNoteActivity, getRoles } from "../lib/store.ts";
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
-    // TODO: Look up roles.
+    // TODO: Get userID from state in context.
     const userId = "1"; // Hard-coded for testing.
     const roles = await getRoles(userId);
     const noteActivity = await getNoteActivity(userId);

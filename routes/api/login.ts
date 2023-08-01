@@ -13,6 +13,9 @@ const login = async (email: string, password: string): [number, object] => {
   if (error) {
     return [error.status, { message: `Login failed: ${error.message}` }]
   }
+
+  // TODO: Look up a user's payments status. If they're beyond a trial period,
+  // redirect them to a checkout page.
   return [302, {
     access_token: data.session.access_token,
     refresh_token: data.session.refresh_token,

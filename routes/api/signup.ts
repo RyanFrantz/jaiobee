@@ -25,6 +25,9 @@ const signUp = async (email: string, password: string): [number, object] => {
     return [error.status, { message: `Sign in failed: ${error.message}` }];
   }
 
+  // TODO: Write an entry to KV to track the user ID and their payment status.
+  // Supabase's userID is in the session. We can also extract it from the sub
+  // claim in the JWT.
   return [302, {
     access_token: data.session.access_token,
     refresh_token: data.session.refresh_token,

@@ -1,3 +1,6 @@
+import { setCookie } from "https://deno.land/std@0.195.0/http/cookie.ts";
+import { ACCESS_COOKIE, REFRESH_COOKIE } from "../lib/constants.ts";
+
 // Return the milliseconds since epoch.
 const epoch = () => {
   return Date.now();
@@ -31,7 +34,7 @@ const epochToLocale = (epoch: string): string => {
  * For example, /api routes will be protected in in routes/api/_middleware.ts.
  */
 const protectedRoutes = [
-  /^\/role/,
+  /^\/role/, // /roles, /role/[id]...
 ];
 
 // Returns truthy if a URL path matches a protected route; falsy otherwise.
@@ -46,4 +49,31 @@ const isAuthenticating = (path) => {
   const authnPaths = /^\/(login|signup)$/;
   return path.match(authnPaths);
 };
-export { epoch, epochToLocale, isAuthenticating, isProtectedRoute };
+
+// Given an access and refresh token, generate cookie headers.
+// TODO: Extend this to accept values for cookie maxAge.
+const genCookies = (url: URL, access_token: string, refresh_token: string) => {
+  const headers = new Headers();
+  setCookie(headers, {
+    name: ACCESS_COOKIE,
+    value: access_token,
+    maxAge: 3600, // 1 hour; the JWT matches this lifetime
+    sameSite: "lax",
+    domain: url.hostname,
+    path: "/",
+    secure: true,
+  });
+  setCookie(headers, {
+    name: REFRESH_COOKIE,
+    value: refresh_token,
+    maxAge: 86400, // 1 day; Supabase docs don't describe this lifetime
+    sameSite: "lax",
+    domain: url.hostname,
+    path: "/",
+    secure: true,
+  });
+
+  return headers;
+};
+
+export { epoch, epochToLocale, genCookies, isAuthenticating, isProtectedRoute };

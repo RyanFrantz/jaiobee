@@ -6,6 +6,29 @@ export default function AuthenticationForm({ signup }) {
         class="mx-auto flex flex-1 flex-col justify-center border border-solid border-gray-400 rounded-lg p-6"
       >
         <form method="post" action={signup ? "/api/signup" : "/api/login"}>
+          {signup
+            ? (
+              <>
+                <div>
+                  <label
+                    for="preferredName"
+                    class="mt-2"
+                  >
+                    Preferred Name
+                  </label>
+                </div>
+                <div>
+                  <input
+                    class="w-full mt-1 border border-solid border-gray-400 rounded-lg p-2"
+                    type="text"
+                    name="preferredName"
+                    placeholder="Jane"
+                    maxlength="100"
+                  />
+                </div>
+              </>
+            )
+            : <></>}
           <div>
             <label
               for="email"

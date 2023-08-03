@@ -8,7 +8,7 @@ export const handler: Handlers = {
     // /role/8/note/add
     //       ^
     const roleId = Number(url.pathname.split("/")[2]);
-    const userId = "1"; // Hard-coded for testing.
+    const userId = ctx.state.userId;
     const formData = await req.formData();
     const inputs = {};
     for (const [key, value] of formData.entries()) {

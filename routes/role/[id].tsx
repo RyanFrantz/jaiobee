@@ -8,7 +8,7 @@ export const handler: Handlers = {
     const url = new URL(req.url);
     // Grab the first part of the pathname to use as input for a role ID.
     const roleId = Number(url.pathname.split("/role/")[1]);
-    const userId = "1"; // Hard-coded for testing.
+    const userId = ctx.state.userId;
     let [statusCode, role] = await getRole(userId, roleId);
     if (statusCode !== 200) {
       role = {};
@@ -26,7 +26,7 @@ export const handler: Handlers = {
       role[key] = value;
     }
     const roleId = Number(url.pathname.split("/role/")[1]);
-    const userId = "1"; // Hard-coding for testing.
+    const userId = ctx.state.userId;
     const [statusCode, response] = await updateRole(userId, roleId, role);
 
     const headers = new Headers();

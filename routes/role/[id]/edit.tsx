@@ -11,7 +11,7 @@ export const handler: Handlers = {
     // /role/8/edit
     //       ^
     const roleId = Number(url.pathname.split("/")[2]);
-    const userId = "1"; // Hard-coded for testing.
+    const userId = ctx.state.userId;
     let [statusCode, role] = await getRole(userId, roleId);
     if (statusCode !== 200) {
       role = {};

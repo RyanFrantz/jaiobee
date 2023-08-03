@@ -10,7 +10,7 @@ export const handler: Handlers = {
     // /role/8/notes
     //       ^
     const roleId = Number(url.pathname.split("/")[2]);
-    const userId = "1"; // Hard-coded for testing.
+    const userId = ctx.state.userId;
     const notes = await getNotes(userId, roleId);
     const body = render(
       <>

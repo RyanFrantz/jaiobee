@@ -14,7 +14,7 @@ export const handler: Handlers = {
     for (const [key, value] of formData.entries()) {
       role[key] = value;
     }
-    const userId = "1"; // Hard-coding for testing.
+    const userId = ctx.state.userId;
     const [statusCode, response] = await addRole(userId, role);
 
     const headers = new Headers();

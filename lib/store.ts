@@ -1,5 +1,35 @@
 import { epoch } from "./utils.ts";
 
+// Store a newly signed-up user.
+// This information will be used to populate a profile. It will include
+// the user's ID, preferred name, email address, and payment status.
+const addUser = async (
+  userId: string,
+  email: string,
+  preferredName: string,
+): [number, object] => {
+  let [statusCode, response] = [201, {}]; // Sane default/starting point.
+  const profile = {
+    email: email,
+    preferredName: preferredName,
+    paymentStatus: "free",
+  };
+
+  const kv = await Deno.openKv();
+  try {
+    await kv.set(["users", userId], profile);
+    response = { userId: userId, message: "User added successfully" };
+  } catch (err) {
+    statusCode = 500;
+    response.message = err;
+    console.log(`Failed to add user for userId ${userId}: ${err}`);
+  } finally {
+    kv.close();
+  }
+
+  return [statusCode, response];
+};
+
 const getRoles = async (userId: string) => {
   const kv = await Deno.openKv();
   const entries = await kv.list({ prefix: [userId, "roles"] }); // KvListIterator
@@ -272,6 +302,7 @@ const updateRole = async (
 export {
   addNote,
   addRole,
+  addUser,
   getNoteActivity,
   getNotes,
   getRole,

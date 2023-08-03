@@ -2,16 +2,22 @@ import { Handlers } from "$fresh/server.ts";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "../../lib/constants.ts";
 import { setCookie } from "https://deno.land/std@0.195.0/http/cookie.ts";
 import supabase from "../../lib/supabase.ts";
+import { userIdFromJwt } from "../../lib/authentication.ts";
+import { addUser } from "../../lib/store.ts";
 
 // If we see these errors, re-attempt signup with that context.
 const reattemptSignup = [
-  "User already registered"
+  "User already registered",
 ];
 
-const signUp = async (email: string, password: string): [number, object] => {
+const signUp = async (
+  email: string,
+  password: string,
+  preferredName: string,
+): [number, object] => {
   const { data, error } = await supabase.auth.signUp({
     email: email,
-    password: password
+    password: password,
   });
 
   if (error) {
@@ -19,19 +25,21 @@ const signUp = async (email: string, password: string): [number, object] => {
       const msg = encodeURI(error.message);
       return [error.status, {
         message: `Sign in failed: ${error.message}`,
-        reattempt: msg
+        reattempt: msg,
       }];
     }
     return [error.status, { message: `Sign in failed: ${error.message}` }];
   }
 
-  // TODO: Write an entry to KV to track the user ID and their payment status.
-  // Supabase's userID is in the session. We can also extract it from the sub
-  // claim in the JWT.
+  const userId = userIdFromJwt(data.session.access_token);
+  // FIXME: Handle errors and/or failure status codes.
+  // Add the new user to the rolls.
+  const [_statusCode, _response] = await addUser(userId, email, preferredName);
+
   return [302, {
     access_token: data.session.access_token,
     refresh_token: data.session.refresh_token,
-    message: "Successfully signed in"
+    message: "Successfully signed in",
   }];
 };
 
@@ -47,7 +55,8 @@ export const handler: Handlers = {
     }
     const email = form.get("email");
     const password = form.get("password");
-    let [responseCode, msg] = await signUp(email, password);
+    const preferredName = form.get("preferredName");
+    let [responseCode, msg] = await signUp(email, password, preferredName);
     const headers = new Headers();
     headers.set("content-type", "application/json");
     headers.set("location", "/");
@@ -64,7 +73,7 @@ export const handler: Handlers = {
         sameSite: "lax",
         domain: url.hostname,
         path: "/",
-        secure: true
+        secure: true,
       });
       setCookie(headers, {
         name: REFRESH_COOKIE,
@@ -73,7 +82,7 @@ export const handler: Handlers = {
         sameSite: "lax",
         domain: url.hostname,
         path: "/",
-        secure: true
+        secure: true,
       });
     }
 
@@ -85,10 +94,10 @@ export const handler: Handlers = {
 
     return new Response(
       JSON.stringify(msg),
-      { 
+      {
         headers: headers,
-        status: responseCode
-      }
+        status: responseCode,
+      },
     );
   },
 };

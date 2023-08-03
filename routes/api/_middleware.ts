@@ -21,7 +21,7 @@ export async function handler(
     (ACCESS_COOKIE in cookies) &&
     !(cookies[ACCESS_COOKIE] == undefined)
   ) {
-    ctx.state.userId = userIdFromJwt(cookies[AUTH_COOKIE_NAME]);
+    ctx.state.userId = userIdFromJwt(cookies[ACCESS_COOKIE]);
   } else {
     ctx.state.userId = undefined; // Be certain this is unset!
   }

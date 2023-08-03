@@ -9,7 +9,8 @@ export default function Header({ isAuthenticating }) {
           <div class="flex h-16 items-center">
             <a
               href={isAuthenticating ? "/" : "/roles"}
-              class="m-4 px-2 hover:bg-gray-300 rounded-full">
+              class="m-4 px-2 hover:bg-gray-300 rounded-full"
+            >
               {isAuthenticating ? "Home" : "Roles"}
             </a>
             <a
@@ -21,7 +22,9 @@ export default function Header({ isAuthenticating }) {
             </a>
           </div>
           <div class="flex items-center">
-            <a href="/account" class={"px-2 hover:bg-gray-300 rounded-full" +
+            <a
+              href="/account"
+              class={"px-2 hover:bg-gray-300 rounded-full" +
                 (isAuthenticating ? " invisible" : "")}
             >
               Account

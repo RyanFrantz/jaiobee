@@ -7,7 +7,7 @@ import { userIdFromJwt } from "../../lib/authentication.ts";
  * the presence of a cookie or Authorization header.
  */
 const protectedRoutes = [
-  /^\/api\/placeholder/
+  /^\/api\/placeholder/,
 ];
 
 export async function handler(
@@ -34,7 +34,7 @@ export async function handler(
 
   const url = new URL(req.url);
   const originalPath = url.pathname;
-  const isProtected = protectedRoutes.find(re => originalPath.match(re));
+  const isProtected = protectedRoutes.find((re) => originalPath.match(re));
   if (!ctx.state.userId && isProtected) {
     return new Response(null, { status: 401 });
   }

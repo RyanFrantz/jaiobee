@@ -7,11 +7,11 @@ import supabase from "../../lib/supabase.ts";
 const login = async (email: string, password: string): [number, object] => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
-    password: password
+    password: password,
   });
 
   if (error) {
-    return [error.status, { message: `Login failed: ${error.message}` }]
+    return [error.status, { message: `Login failed: ${error.message}` }];
   }
 
   // TODO: Look up a user's payments status. If they're beyond a trial period,
@@ -19,7 +19,7 @@ const login = async (email: string, password: string): [number, object] => {
   return [302, {
     access_token: data.session.access_token,
     refresh_token: data.session.refresh_token,
-    message: "Successfully signed in"
+    message: "Successfully signed in",
   }];
 };
 
@@ -49,7 +49,7 @@ export const handler: Handlers = {
         sameSite: "lax",
         domain: url.hostname,
         path: "/",
-        secure: true
+        secure: true,
       });
       setCookie(headers, {
         name: REFRESH_COOKIE,
@@ -58,15 +58,15 @@ export const handler: Handlers = {
         sameSite: "lax",
         domain: url.hostname,
         path: "/",
-        secure: true
+        secure: true,
       });
     }
     return new Response(
       JSON.stringify(msg),
-      { 
+      {
         headers: headers,
-        status: responseCode
-      }
+        status: responseCode,
+      },
     );
   },
 };

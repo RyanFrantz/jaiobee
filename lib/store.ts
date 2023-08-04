@@ -12,6 +12,7 @@ const addUser = async (
   const profile = {
     email: email,
     preferredName: preferredName,
+    createdAt: epoch(),
     paymentStatus: "free",
   };
 

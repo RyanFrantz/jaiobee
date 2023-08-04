@@ -1,7 +1,6 @@
 import { epochToLocale } from "../lib/utils.ts";
 
 export default function UserProfile({ profile }) {
-  console.log(profile);
   return (
     <div class="flex flex-1 flex-col justify-center px-6 py-12">
       <div

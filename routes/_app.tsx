@@ -11,6 +11,7 @@ export default function App({ Component, route }: AppProps) {
       <Head>
         <meta name="author" content="frantz" />
         <script src={asset("/js/htmx@1.9.3.min.js")}></script>
+        <script src={asset("/js/hyperscript.org@0.9.9.js")}></script>
       </Head>
       <main class="font-mono">
         <div class="px-6 py-12">

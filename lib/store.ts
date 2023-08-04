@@ -30,6 +30,8 @@ const addUser = async (
   return [statusCode, response];
 };
 
+// TODO: Write getUser() function.
+
 const getRoles = async (userId: string) => {
   const kv = await Deno.openKv();
   const entries = await kv.list({ prefix: [userId, "roles"] }); // KvListIterator

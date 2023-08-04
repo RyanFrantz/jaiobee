@@ -1,5 +1,8 @@
 export default function Header({ isAuthenticating }) {
   // Adapted from https://tailwindui.com/components/application-ui/application-shells/stacked
+  // Also lifted some navbar functionality from
+  // https://tailwindui.com/components/application-ui/navigation/navbars
+  //
   // If we're on an authentication-related route, make most of the navigation
   // invisible/inaccessible.
   return (
@@ -21,14 +24,40 @@ export default function Header({ isAuthenticating }) {
               Contacts
             </a>
           </div>
-          <div class="flex items-center">
-            <a
-              href="/account"
+          <div class="relative ml-3 flex items-center">
+            <button
+              _="on click toggle .hidden on #account-menu"
               class={"px-2 hover:bg-gray-300 rounded-full" +
                 (isAuthenticating ? " invisible" : "")}
             >
               Account
-            </a>
+            </button>
+            <div
+              class="hidden absolute top-10 right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg"
+              role="menu"
+              id="account-menu"
+              aria-orientation="vertical"
+              tabindex="-1"
+            >
+              <a
+                href="/profile"
+                class="block px-4 py-2 text-sm hover:underline"
+                role="menuitem"
+                tabindex="-1"
+                id="account-profile"
+              >
+                Profile
+              </a>
+              <a
+                href="/signout"
+                class="block px-4 py-2 text-sm hover:underline"
+                role="menuitem"
+                tabindex="-1"
+                id="account-signout"
+              >
+                Sign out
+              </a>
+            </div>
           </div>
         </div>
       </nav>

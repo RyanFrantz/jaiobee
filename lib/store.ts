@@ -31,7 +31,14 @@ const addUser = async (
   return [statusCode, response];
 };
 
-// TODO: Write getUser() function.
+const getUser = async (userId: string) => {
+  let profile;
+  const kv = await Deno.openKv();
+  const entry = await kv.get(["users", userId]);
+  profile = entry.value;
+  kv.close();
+  return profile;
+};
 
 const getRoles = async (userId: string) => {
   const kv = await Deno.openKv();
@@ -310,6 +317,7 @@ export {
   getNotes,
   getRole,
   getRoles,
+  getUser,
   makeNote,
   updateRole,
 };

@@ -35,6 +35,7 @@ const epochToLocale = (epoch: string): string => {
  */
 const protectedRoutes = [
   /^\/role/, // /roles, /role/[id]...
+  /^\/profile/,
 ];
 
 // Returns truthy if a URL path matches a protected route; falsy otherwise.

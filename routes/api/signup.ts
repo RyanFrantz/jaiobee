@@ -3,7 +3,7 @@ import { ACCESS_COOKIE, REFRESH_COOKIE } from "../../lib/constants.ts";
 import { setCookie } from "https://deno.land/std@0.195.0/http/cookie.ts";
 import supabase from "../../lib/supabase.ts";
 import { userIdFromJwt } from "../../lib/authentication.ts";
-import { addUser } from "../../lib/store.ts";
+import { addUser, updateLastLogin } from "../../lib/store.ts";
 
 // If we see these errors, re-attempt signup with that context.
 const reattemptSignup = [
@@ -35,6 +35,7 @@ const signUp = async (
   // FIXME: Handle errors and/or failure status codes.
   // Add the new user to the rolls.
   const [_statusCode, _response] = await addUser(userId, email, preferredName);
+  await updateLastLogin(userId);
 
   return [302, {
     access_token: data.session.access_token,

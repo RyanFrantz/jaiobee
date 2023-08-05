@@ -2,6 +2,8 @@ import { Handlers } from "$fresh/server.ts";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "../../lib/constants.ts";
 import { setCookie } from "https://deno.land/std@0.195.0/http/cookie.ts";
 import supabase from "../../lib/supabase.ts";
+import { userIdFromJwt } from "../../lib/authentication.ts";
+import { updateLastLogin } from "../../lib/store.ts";
 
 // TODO: Offer the user a chance to log in again if they experience an error.
 const login = async (email: string, password: string): [number, object] => {
@@ -13,6 +15,8 @@ const login = async (email: string, password: string): [number, object] => {
   if (error) {
     return [error.status, { message: `Login failed: ${error.message}` }];
   }
+  const userId = userIdFromJwt(data.session.access_token);
+  await updateLastLogin(userId);
 
   // TODO: Look up a user's payments status. If they're beyond a trial period,
   // redirect them to a checkout page.

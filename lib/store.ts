@@ -18,7 +18,7 @@ const addUser = async (
 
   const kv = await Deno.openKv();
   try {
-    await kv.set(["users", userId], profile);
+    await kv.set(["users", userId, "profile"], profile);
     response = { userId: userId, message: "User added successfully" };
   } catch (err) {
     statusCode = 500;
@@ -34,10 +34,23 @@ const addUser = async (
 const getUser = async (userId: string) => {
   let profile;
   const kv = await Deno.openKv();
-  const entry = await kv.get(["users", userId]);
+  const entry = await kv.get(["users", userId, "profile"]);
   profile = entry.value;
   kv.close();
   return profile;
+};
+
+// Track the last time a user logged in.
+const updateLastLogin = async (userId: string): void => {
+  const kv = await Deno.openKv();
+  try {
+    await kv.set(["users", userId, "lastLogin"], epoch());
+    response = { userId: userId, message: "Last login updated successfully" };
+  } catch (err) {
+    console.log(`Failed to update last login for userId ${userId}: ${err}`);
+  } finally {
+    kv.close();
+  }
 };
 
 const getRoles = async (userId: string) => {
@@ -319,5 +332,6 @@ export {
   getRoles,
   getUser,
   makeNote,
+  updateLastLogin,
   updateRole,
 };

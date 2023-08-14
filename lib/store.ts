@@ -1,4 +1,5 @@
 import { epoch } from "./utils.ts";
+import { sendMetric } from "./metrics.ts";
 
 // Store a newly signed-up user.
 // This information will be used to populate a profile. It will include
@@ -151,6 +152,7 @@ const addRole = async (userId: string, role): [number, object] => {
   try {
     // The combination of user ID and role ID will be the key.
     await kv.set([userId, "roles", role.id], role);
+    sendMetric("roleAdded");
     response = { roleId: nextId, message: "Role added successfully" };
   } catch (err) {
     statusCode = 500;
@@ -240,6 +242,7 @@ const addNote = async (
   const kv = await Deno.openKv();
   try {
     await kv.set([userId, "notes", roleId, note.id], note);
+    sendMetric("noteAdded");
     response = { noteId: nextId, message: "Note added successfully" };
   } catch (err) {
     statusCode = 500;
@@ -309,6 +312,7 @@ const updateRole = async (
     try {
       // Replace the role entirely.
       await kv.set([userId, "roles", roleId], updatedRole);
+      sendMetric("roleUpdated");
       response = { roleId: roleId, message: "Role updated successfully" };
     } catch (err) {
       statusCode = 500;

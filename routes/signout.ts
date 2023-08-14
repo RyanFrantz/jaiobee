@@ -1,6 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "../lib/constants.ts";
 import { deleteCookie } from "https://deno.land/std@0.195.0/http/cookie.ts";
+import { sendMetric } from "../lib/metrics.ts";
 
 // Delete all relevant cookies and redirect to /login.
 export const handler: Handlers = {
@@ -12,6 +13,7 @@ export const handler: Handlers = {
     deleteCookie(headers, ACCESS_COOKIE);
     deleteCookie(headers, REFRESH_COOKIE);
     headers.set("location", "/login");
+    sendMetric("signoutSuccess");
     return new Response("", {
       headers: headers,
       status: 302,

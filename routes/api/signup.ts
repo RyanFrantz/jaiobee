@@ -4,6 +4,7 @@ import { setCookie } from "https://deno.land/std@0.195.0/http/cookie.ts";
 import supabase from "../../lib/supabase.ts";
 import { userIdFromJwt } from "../../lib/authentication.ts";
 import { addUser, updateLastLogin } from "../../lib/store.ts";
+import { sendMetric } from "../../lib/metrics.ts";
 
 // If we see these errors, re-attempt signup with that context.
 const reattemptSignup = [
@@ -21,6 +22,7 @@ const signUp = async (
   });
 
   if (error) {
+    sendMetric("signupFailed");
     if (reattemptSignup.includes(error.message)) {
       const msg = encodeURI(error.message);
       return [error.status, {
@@ -37,6 +39,7 @@ const signUp = async (
   const [_statusCode, _response] = await addUser(userId, email, preferredName);
   await updateLastLogin(userId);
 
+  sendMetric("signupSuccess");
   return [302, {
     access_token: data.session.access_token,
     refresh_token: data.session.refresh_token,

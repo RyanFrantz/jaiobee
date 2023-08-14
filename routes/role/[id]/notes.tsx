@@ -5,7 +5,7 @@ import { epochToLocale } from "../../../lib/utils.ts";
 import NewNoteContainer from "../../../components/NewNoteContainer.tsx";
 
 export const handler: Handlers = {
-  async GET(req, _ctx) {
+  async GET(req, ctx) {
     const url = new URL(req.url);
     // /role/8/notes
     //       ^

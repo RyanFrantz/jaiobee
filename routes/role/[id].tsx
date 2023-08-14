@@ -18,7 +18,7 @@ export const handler: Handlers = {
   },
 
   // The user clicked 'Save Role'.
-  async POST(req, _ctx) {
+  async POST(req, ctx) {
     const url = new URL(req.url);
     const formData = await req.formData();
     const role = {};

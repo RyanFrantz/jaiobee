@@ -3,7 +3,7 @@ import { addNote } from "../../../../lib/store.ts";
 import { makeNote } from "../../../../lib/store.ts";
 
 export const handler: Handlers = {
-  async POST(req) {
+  async POST(req, ctx) {
     const url = new URL(req.url);
     // /role/8/note/add
     //       ^

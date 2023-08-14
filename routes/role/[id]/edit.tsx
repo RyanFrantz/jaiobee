@@ -6,7 +6,7 @@ import RoleForm from "../../../components/RoleForm.tsx";
 
 // Returns hypermedia that will replace a container from whence it was called.
 export const handler: Handlers = {
-  async GET(req, _ctx) {
+  async GET(req, ctx) {
     const url = new URL(req.url);
     // /role/8/edit
     //       ^

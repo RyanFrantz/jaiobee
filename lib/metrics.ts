@@ -8,7 +8,6 @@ const headers = {
 // Given a string representing a counter we want to increment, issue a request
 // to our OpenTelemetry relay service.
 const sendMetric = async(metricName: string) => {
-  console.log(`Sending metric '${metricName}'`);
   const url = `${orlyBaseUrl}/${metricName}`;
   try {
     await fetch(url, {

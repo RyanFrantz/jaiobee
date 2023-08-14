@@ -46,7 +46,7 @@ const updateLastLogin = async (userId: string): void => {
   const kv = await Deno.openKv();
   try {
     await kv.set(["users", userId, "lastLogin"], epoch());
-    response = { userId: userId, message: "Last login updated successfully" };
+    console.log(`Last login updated successfully for ${userId}`);
   } catch (err) {
     console.log(`Failed to update last login for userId ${userId}: ${err}`);
   } finally {

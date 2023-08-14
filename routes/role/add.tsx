@@ -8,7 +8,7 @@ export const handler: Handlers = {
   async GET(_req, ctx) {
     return await ctx.render();
   },
-  async POST(req, _ctx) {
+  async POST(req, ctx) {
     const formData = await req.formData();
     const role = {};
     for (const [key, value] of formData.entries()) {

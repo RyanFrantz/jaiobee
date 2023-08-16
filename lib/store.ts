@@ -68,7 +68,7 @@ const getRoles = async (userId: string) => {
         jobPostingUrl: "",
         description: "",
         "created-at": "",
-        "referral-contact": "",
+        referralContact: "",
         "recruiter-contact": "",
         id: 4
       },
@@ -263,7 +263,7 @@ const friendlyRoleProperties = {
   status: "Status",
   "jobPostingUrl": "Job Posting",
   description: "Description",
-  "referral-contact": "Referral Contact",
+  referralContact: "Referral Contact",
   "recruiter-contact": "Recruiter Contact",
 };
 // A very naive solution to finding differences between objects.

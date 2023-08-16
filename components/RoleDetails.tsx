@@ -77,14 +77,14 @@ export default function RoleDetails({ role }) {
             </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">
-            <label for="referral-contact" class="block text-sm pr-1 underline">
+            <label for="referralContact" class="block text-sm pr-1 underline">
               Referral Contact
             </label>
             <span
-              name="referral-contact"
+              name="referralContact"
               class="w-full mt-1 text-sm"
             >
-              {role["referral-contact"] || "N/A"}
+              {role?.referralContact || "N/A"}
             </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">

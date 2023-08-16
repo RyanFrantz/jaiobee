@@ -132,14 +132,14 @@ export default function RoleInputs({ role, action }) {
           </div>
 
           <div class="col-span-1 mt-2 mr-2">
-            <label for="referral-contact" class="block text-sm pr-1">
+            <label for="referralContact" class="block text-sm pr-1">
               Referral Contact
             </label>
             <input
               type="text"
-              name="referral-contact"
+              name="referralContact"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-              value={role["referral-contact"]}
+              value={role?.referralContact}
             />
           </div>
           <div class="col-span-1 mt-2 mr-2">

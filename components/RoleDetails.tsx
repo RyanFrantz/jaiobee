@@ -41,14 +41,14 @@ export default function RoleDetails({ role }) {
             </span>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">
-            <label for="job-posting-url" class="block text-sm pr-1 underline">
+            <label for="jobPostingUrl" class="block text-sm pr-1 underline">
               Job Posting
             </label>
             <span
-              name="job-posting-url"
+              name="jobPostingUrl"
               class="w-full mt-1 text-sm"
             >
-              {role["job-posting-url"] || "N/A"}
+              {role["jobPostingUrl"] || "N/A"}
             </span>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">

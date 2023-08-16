@@ -58,16 +58,16 @@ export default function RoleInputs({ role, action }) {
             </select>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">
-            <label for="job-posting-url" class="block text-sm pr-1">
+            <label for="jobPostingUrl" class="block text-sm pr-1">
               Job Posting
             </label>
             <input
               type="url"
-              name="job-posting-url"
+              name="jobPostingUrl"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md placeholder:italic placeholder:text-gray-400"
               placeholder="https://example.com/careers/123"
               pattern="https?://.*"
-              value={role?.["job-posting-url"]}
+              value={role?.["jobPostingUrl"]}
             />
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">

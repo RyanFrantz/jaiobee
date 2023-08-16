@@ -65,7 +65,7 @@ const getRoles = async (userId: string) => {
       value: {
         title: "Director of Engineering",
         company: "Coca-Cola",
-        "job-posting-url": "",
+        jobPostingUrl: "",
         description: "",
         "created-at": "",
         "referral-contact": "",
@@ -261,7 +261,7 @@ const friendlyRoleProperties = {
   title: "Title",
   company: "Company",
   status: "Status",
-  "job-posting-url": "Job Posting",
+  "jobPostingUrl": "Job Posting",
   description: "Description",
   "referral-contact": "Referral Contact",
   "recruiter-contact": "Recruiter Contact",

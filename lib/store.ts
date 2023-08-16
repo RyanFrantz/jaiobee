@@ -67,7 +67,7 @@ const getRoles = async (userId: string) => {
         company: "Coca-Cola",
         jobPostingUrl: "",
         description: "",
-        "created-at": "",
+        createdAt: "",
         referralContact: "",
         recruiterContact: "",
         id: 4
@@ -91,7 +91,7 @@ const getNotes = async (userId: string, roleId: number) => {
     /*
     {
       key: [ "1", "notes", 7, 1 ],
-      value: { "created-at": 1690051859404, message: "Added role.", id: 1 },
+      value: { createdAt: 1690051859404, message: "Added role.", id: 1 },
       versionstamp: "000000000000005d0000"
     }
      */
@@ -130,13 +130,13 @@ const addRole = async (userId: string, role): [number, object] => {
     nextId = 1;
   }
   role.id = nextId;
-  if ("created-at" in role && role["created-at"].length == 0) {
+  if ("createdAt" in role && role.createdAt.length == 0) {
     // Set it by default.
-    role["created-at"] = epoch();
+    role.createdAt = epoch();
   } else {
-    // The value of "created-at" should be a number but the form passed it
+    // The value of "createdAt" should be a number but the form passed it
     // as a string.
-    role["created-at"] = parseInt(role["created-at"]);
+    role.createdAt = parseInt(role.createdAt);
   }
   // FIXME: I'm being lazy with this copypasta.
   if ("updated-at" in role && role["updated-at"].length == 0) {
@@ -164,7 +164,7 @@ const addRole = async (userId: string, role): [number, object] => {
 
   // First note!
   const note = {
-    "created-at": role["created-at"],
+    createdAt: role.createdAt,
     message: "Added role.",
   };
   await addNote(userId, role.id, note);
@@ -175,7 +175,7 @@ const addRole = async (userId: string, role): [number, object] => {
 // Given a string, generates a note object.
 const makeNote = (message: string) => {
   return {
-    "created-at": epoch(),
+    createdAt: epoch(),
     message: message,
   };
 };
@@ -231,12 +231,12 @@ const addNote = async (
     nextId = 1;
   }
   note.id = nextId;
-  if (note["created-at"].length == 0) {
+  if (note.createdAt.length == 0) {
     // Set it by default.
-    note["created-at"] = epoch();
+    note.createdAt = epoch();
   } else {
     // Should be a number but the form passed it as a string.
-    note["created-at"] = parseInt(note["created-at"]);
+    note.createdAt = parseInt(note.createdAt);
   }
   let [statusCode, response] = [201, {}]; // Sane default/starting point.
   const kv = await Deno.openKv();
@@ -273,7 +273,7 @@ const roleChanges = (existingRole, newRole) => {
   for (const key of Object.keys(existingRole)) {
     if (existingRole[key] !== newRole[key]) {
       // Never directly changed by form inputs.
-      if (key == "created-at" || key == "updated-at") {
+      if (key == "createdAt" || key == "updated-at") {
         continue;
       }
       changes.push(
@@ -305,7 +305,7 @@ const updateRole = async (
       }
     }
     // Merge the updated role properties with the existing role.
-    // This ensures the "created-at" property is retained.
+    // This ensures the "createdAt" property is retained.
     const updatedRole = Object.assign(existingRole, role);
     updatedRole["updated-at"] = epoch();
     const kv = await Deno.openKv();

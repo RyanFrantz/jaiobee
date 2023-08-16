@@ -30,7 +30,7 @@ export const handler: Handlers = {
           {notes.reverse().map((note) => (
             <div class="w-full mt-1 p-2 border border-solid rounded-lg text-sm flex justify-start border-gray-400">
               <div class="px-2 text-white bg-emerald-500 rounded-full">
-                {epochToLocale(note["created-at"])}
+                {epochToLocale(note.createdAt)}
               </div>
               <div class="mx-2">
                 {note.message}

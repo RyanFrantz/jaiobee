@@ -66,14 +66,14 @@ export default function RoleDetails({ role }) {
         {/* Contacts */}
         <div class="w-full p-4 grid grid-cols-1">
           <div class="col-span-1 mt-2 mr-2">
-            <label for="created-at" class="block text-sm pr-1 underline">
+            <label for="createdAt" class="block text-sm pr-1 underline">
               Created
             </label>
             <span
-              name="created-at"
+              name="createdAt"
               class="w-1/2 mt-1 text-sm"
             >
-              {epochToLocale(role["created-at"])}
+              {epochToLocale(role.createdAt)}
             </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">

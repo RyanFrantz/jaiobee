@@ -88,14 +88,14 @@ export default function RoleDetails({ role }) {
             </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">
-            <label for="recruiter-contact" class="block text-sm pr-1 underline">
+            <label for="recruiterContact" class="block text-sm pr-1 underline">
               Recruiter Contact
             </label>
             <span
-              name="recruiter-contact"
+              name="recruiterContact"
               class="w-full mt-1 text-sm"
             >
-              {role["recruiter-contact"] || "N/A"}
+              {role?.recruiterContact || "N/A"}
             </span>
           </div>
         </div>

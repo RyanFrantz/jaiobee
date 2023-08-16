@@ -139,13 +139,13 @@ const addRole = async (userId: string, role): [number, object] => {
     role.createdAt = parseInt(role.createdAt);
   }
   // FIXME: I'm being lazy with this copypasta.
-  if ("updated-at" in role && role["updated-at"].length == 0) {
+  if ("updatedAt" in role && role.updatedAt.length == 0) {
     // Set it by default.
-    role["updated-at"] = epoch();
+    role.updatedAt = epoch();
   } else {
-    // The value of "updated-at" should be a number but the form passed it
+    // The value of "updatedAt" should be a number but the form passed it
     // as a string.
-    role["updated-at"] = parseInt(role["updated-at"]);
+    role.updatedAt = parseInt(role.updatedAt);
   }
   let [statusCode, response] = [201, {}]; // Sane default/starting point.
   const kv = await Deno.openKv();
@@ -273,7 +273,7 @@ const roleChanges = (existingRole, newRole) => {
   for (const key of Object.keys(existingRole)) {
     if (existingRole[key] !== newRole[key]) {
       // Never directly changed by form inputs.
-      if (key == "createdAt" || key == "updated-at") {
+      if (key == "createdAt" || key == "updatedAt") {
         continue;
       }
       changes.push(
@@ -307,7 +307,7 @@ const updateRole = async (
     // Merge the updated role properties with the existing role.
     // This ensures the "createdAt" property is retained.
     const updatedRole = Object.assign(existingRole, role);
-    updatedRole["updated-at"] = epoch();
+    updatedRole.updatedAt = epoch();
     const kv = await Deno.openKv();
     try {
       // Replace the role entirely.

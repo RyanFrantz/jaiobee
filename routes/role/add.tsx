@@ -38,7 +38,7 @@ export default function AddRole() {
   // The user is adding the role for the first time so we'll pre-populate the
   // important bits.
   const now = epoch();
-  const role = { createdAt: now, "updated-at": now };
+  const role = { createdAt: now, updatedAt: now };
   return (
     <div id="role-container">
       <SaveRoleButton />

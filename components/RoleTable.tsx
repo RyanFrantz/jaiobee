@@ -49,7 +49,7 @@ export default function RoleTable({ roles, noteActivity }) {
                 <td class="p-4">{role.company}</td>
                 <td class="p-4">
                   {epochToLocale(
-                    Math.max(role["updated-at"], noteActivity[role.id]),
+                    Math.max(role.updatedAt, noteActivity[role.id]),
                   )}
                 </td>
                 <td class="p-4">{role.status}</td>

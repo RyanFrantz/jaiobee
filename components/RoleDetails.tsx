@@ -1,4 +1,5 @@
 import { epochToLocale } from "../lib/utils.ts";
+import { roleStatusTypes } from "./roleStatusTypes.ts";
 
 export default function RoleDetails({ role }) {
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
@@ -37,7 +38,7 @@ export default function RoleDetails({ role }) {
               name="status"
               class="w-full mt-1 text-sm"
             >
-              {role?.status}
+              {roleStatusTypes[role?.status]}
             </span>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">

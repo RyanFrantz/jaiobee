@@ -1,12 +1,5 @@
 import { epochToLocale } from "../lib/utils.ts";
-
-const statusTypes = {
-  interested: "Interested",
-  applied: "Applied",
-  referred: "Referred",
-  rejected: "Rejected",
-  passed: "Passed",
-};
+import { roleStatusTypes } from "./roleStatusTypes.ts";
 
 export default function RoleInputs({ role, action }) {
   // Possible action values are "add" and "edit" because this form is used
@@ -47,7 +40,7 @@ export default function RoleInputs({ role, action }) {
               name="status"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
             >
-              {Object.entries(statusTypes).map(([status, label]) => (
+              {Object.entries(roleStatusTypes).map(([status, label]) => (
                 <option
                   value={status}
                   selected={role.status == status}

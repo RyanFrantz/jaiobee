@@ -1,5 +1,6 @@
 import { setCookie } from "https://deno.land/std@0.195.0/http/cookie.ts";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "../lib/constants.ts";
+import { AppContext } from "$fresh/server.ts";
 
 // Return the milliseconds since epoch.
 const epoch = () => {
@@ -45,10 +46,10 @@ const isProtectedRoute = (path) => {
   return protectedRoutes.find((re) => path.match(re));
 };
 
-// Returns truthy if a URL path matches one of our authentication-related routes.
-const isAuthenticating = (path) => {
-  const authnPaths = /^\/(login|signup)$/;
-  return path.match(authnPaths);
+// Our middlware sets (and unsets) the userId property in the app context's
+// `state` property. If it's present, the user has been authenticated.
+const isAuthenticated = (ctx: AppContext) => {
+  return Object.keys(ctx?.state).includes("userId");
 };
 
 // Given an access and refresh token, generate cookie headers.
@@ -77,4 +78,4 @@ const genCookies = (url: URL, access_token: string, refresh_token: string) => {
   return headers;
 };
 
-export { epoch, epochToLocale, genCookies, isAuthenticating, isProtectedRoute };
+export { epoch, epochToLocale, genCookies, isAuthenticated, isProtectedRoute };

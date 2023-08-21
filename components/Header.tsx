@@ -1,4 +1,4 @@
-export default function Header({ isAuthenticating }) {
+export default function Header({ isAuthenticated }) {
   // Adapted from https://tailwindui.com/components/application-ui/application-shells/stacked
   // Also lifted some navbar functionality from
   // https://tailwindui.com/components/application-ui/navigation/navbars
@@ -11,15 +11,15 @@ export default function Header({ isAuthenticating }) {
         <div class="flex justify-between">
           <div class="flex h-16 items-center">
             <a
-              href={isAuthenticating ? "/" : "/roles"}
+              href={isAuthenticated ? "/roles" : "/"}
               class="m-4 px-2 hover:bg-gray-300 rounded-full"
             >
-              {isAuthenticating ? "Home" : "Roles"}
+              {isAuthenticated ? "Roles" : "Home"}
             </a>
             <a
               href="/contacts"
               class={"m-4 px-2 hover:bg-gray-300 rounded-full" +
-                (isAuthenticating ? " invisible" : "")}
+                (isAuthenticated ? "" : " invisible")}
             >
               Contacts
             </a>
@@ -28,7 +28,7 @@ export default function Header({ isAuthenticating }) {
             <button
               _="on click toggle .hidden on #account-menu"
               class={"px-2 hover:bg-gray-300 rounded-full" +
-                (isAuthenticating ? " invisible" : "")}
+                (isAuthenticated ? "" : " invisible")}
             >
               Account
             </button>

@@ -7,6 +7,13 @@ export default function Header({ isAuthenticated }) {
   // invisible/inaccessible.
   return (
     <header>
+      <div class="flex justify-center">
+        <a
+          href="/"
+          class="block p-2 text-2xl hover:underline">
+        jaiobee
+        </a>
+      </div>
       <nav class="min-h-full bg-gray-200 px-4 border border-solid border-gray-400  rounded-t-lg">
         <div class="flex justify-between">
           <div class="flex h-16 items-center">

@@ -5,13 +5,14 @@ import { sendMetric } from "../lib/metrics.ts";
 
 // Delete all relevant cookies and redirect to /login.
 export const handler: Handlers = {
-  async GET(_req, ctx) {
+  async GET(req, ctx) {
+     const url = new URL(req.url);
     // Clear user state.
     ctx.state.userId = undefined;
     // Clear cookies and redirect to /login.
     const headers = new Headers();
-    deleteCookie(headers, ACCESS_COOKIE);
-    deleteCookie(headers, REFRESH_COOKIE);
+    deleteCookie(headers, ACCESS_COOKIE, {path: "/", domain: url.hostname});
+    deleteCookie(headers, REFRESH_COOKIE, {path: "/", domain: url.hostname});
     headers.set("location", "/login");
     sendMetric("signoutSuccess");
     return new Response("", {

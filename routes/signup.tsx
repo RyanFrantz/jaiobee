@@ -1,6 +1,7 @@
 import AuthenticationForm from "../components/AuthenticationForm.tsx";
 import { Handlers } from "$fresh/server.ts";
 import { isAuthenticated } from "../lib/utils.ts";
+import AlreadyLoggedIn from "../components/AlreadyLoggedIn.tsx";
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -18,7 +19,7 @@ export default function Login(props) {
   const { isAuthenticated, error } = props.data;
   return (
     <>
-      {isAuthenticated ? <h3>You're already logged in!</h3> : (
+      {isAuthenticated ? <AlreadyLoggedIn /> : (
         <div>
           {error &&
             (

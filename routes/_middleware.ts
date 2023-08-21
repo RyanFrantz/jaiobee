@@ -74,6 +74,12 @@ export async function handler(
       return Response.redirect(url);
     }
   } // end `if (isProtectRoute()`
+
+  // Set userId in context even for non-protected routes.
+  if (cookies[ACCESS_COOKIE]) {
+    ctx.state.userId = userIdFromJwt(cookies[ACCESS_COOKIE]);
+  }
+
   const resp = await ctx.next();
   return resp;
 }

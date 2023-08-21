@@ -35,6 +35,7 @@ const epochToLocale = (epoch: string): string => {
  * For example, /api routes will be protected in in routes/api/_middleware.ts.
  */
 const protectedRoutes = [
+  /^\/contacts/,
   /^\/role/, // /roles, /role/[id]...
   /^\/profile/,
 ];

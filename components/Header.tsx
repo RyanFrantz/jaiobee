@@ -32,6 +32,8 @@ export default function Header({ isAuthenticated }) {
             </a>
           </div>
           <div class="relative ml-3 flex items-center">
+            { isAuthenticated ? (
+            <>
             <button
               _="on click toggle .hidden on #account-menu"
               class={"px-2 hover:bg-gray-300 rounded-full" +
@@ -65,6 +67,15 @@ export default function Header({ isAuthenticated }) {
                 Sign out
               </a>
             </div>
+            </>
+            ) : (
+            <a
+              href="/login"
+              class="m-4 px-2 hover:bg-gray-300 rounded-full"
+            >
+              Login
+            </a>
+            )}
           </div>
         </div>
       </nav>

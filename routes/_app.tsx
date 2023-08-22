@@ -13,6 +13,7 @@ export default async function App(_req: Request, ctx: AppContext) {
         <meta name="author" content="frantz" />
         <script src={asset("/js/htmx@1.9.3.min.js")}></script>
         <script src={asset("/js/hyperscript.org@0.9.9.js")}></script>
+        <link rel="stylesheet" href={asset("/css/tailwind.css")} />
       </Head>
       <GoogleAnalytics />
       <main class="font-mono">

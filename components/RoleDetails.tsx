@@ -16,7 +16,7 @@ export default function RoleDetails({ role }) {
               Title
             </label>
             <span class="w-full mt-1 text-sm">
-              {role.title}
+              {role?.title}
             </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">
@@ -49,7 +49,7 @@ export default function RoleDetails({ role }) {
               name="jobPostingUrl"
               class="w-full mt-1 text-sm"
             >
-              {role["jobPostingUrl"] || "N/A"}
+              {role?.jobPostingUrl || "N/A"}
             </span>
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">

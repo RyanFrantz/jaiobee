@@ -5,3 +5,4 @@
 .env.production.local
 .env.local
 *.swp
+_fresh/

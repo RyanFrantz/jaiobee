@@ -61,6 +61,8 @@ export async function handler(
         // Extract the tokens from the session.
         const { access_token, refresh_token } = data.session;
         const headers = genCookies(url, access_token, refresh_token);
+        // Reset userId in context.
+        ctx.state.userId = userIdFromJwt(access_token);
         const resp = await ctx.next();
         // Append cookie headers to the response.
         for (const [headerName, headerValue] of headers) {

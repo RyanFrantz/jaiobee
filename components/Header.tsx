@@ -58,6 +58,16 @@ export default function Header({ isAuthenticated }) {
                 Profile
               </a>
               <a
+                href="mailto:support@jaiobee.com"
+                target="_blank"
+                class="block px-4 py-2 text-sm hover:underline"
+                role="menuitem"
+                tabindex="-1"
+                id="account-email-support"
+              >
+                Email Support
+              </a>
+              <a
                 href="/signout"
                 class="block px-4 py-2 text-sm hover:underline"
                 role="menuitem"

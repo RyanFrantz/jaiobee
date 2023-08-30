@@ -8,7 +8,7 @@ import GoogleAnalytics from "../components/GoogleAnalytics.tsx";
 import userState, { UserDateTimeFormat } from "../context/UserContext.ts"
 // Export this so we can expose it as a singleton for later useContext() calls.
 export const UserContext = createContext<UserDateTimeFormat>({} as UserDateTimeFormat)
-import DetectUserLocale from "../islands/DetectUserLocale.tsx";
+import UserLocale from "../components/UserLocale.tsx";
 
 export default async function App(_req: Request, ctx: AppContext) {
   const isAuthned = isAuthenticated(ctx);
@@ -27,7 +27,7 @@ export default async function App(_req: Request, ctx: AppContext) {
             <div class="flex flex-col min-h-screen mx-auto max-w-7xl w-full">
               <Header isAuthenticated={isAuthned} />
               <UserContext.Provider value={userState}>
-              <DetectUserLocale />
+              <UserLocale />
               <ctx.Component />
               </UserContext.Provider>
               {/* Future footer */}

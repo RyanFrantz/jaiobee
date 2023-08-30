@@ -5,11 +5,13 @@ import { useEffect } from "preact/hooks";
 export default function DetectUserLocale({ locale, timeZone }) {
   useEffect(() => {
     // Alias the destructured properties to avoid collisons.
+    console.log("BEFORE timeZone:", timeZone)
     const { locale: browserLocale, timeZone: browserTimeZone } = Intl
       .DateTimeFormat().resolvedOptions();
     // Update the relevant signals.
     locale.value = browserLocale;
     timeZone.value = browserTimeZone;
+    console.log("AFTER timeZone:", timeZone)
   }, []);
 
   // Nothing to see here. Writing this return for completeness.

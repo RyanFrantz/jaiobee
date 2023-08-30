@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "preact/hooks";
-import { UserContext } from "../routes/_app.tsx"
+import { useUserContext } from "./UserContextProvider.tsx";
 import DetectUserLocale from "../islands/DetectUserLocale.tsx";
 
 // This component wraps DetectUserLocale because context providers aren't
@@ -7,7 +6,7 @@ import DetectUserLocale from "../islands/DetectUserLocale.tsx";
 // component and pass it to the island. Because the props we're passing
 // are signals, within the island those signals can be updated.
 export default function UserLocale() {
-  let { locale, timeZone } = useContext(UserContext);
+  let { locale, timeZone } = useUserContext();
 
   return (
     <DetectUserLocale locale={locale} timeZone={timeZone} />

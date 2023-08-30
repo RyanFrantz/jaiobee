@@ -5,6 +5,7 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import RoleTable from "../components/RoleTable.tsx";
 import AddRoleButton from "../components/AddRoleButton.tsx";
 import { getNoteActivity, getRoles } from "../lib/store.ts";
+import { useUserContext } from "../components/UserContextProvider.tsx";
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
@@ -16,6 +17,8 @@ export const handler: Handlers = {
 };
 
 export default function Roles(props: PageProps) {
+  const { timeZone } = useUserContext();
+  console.log("ROLES timeZone:", timeZone)
   const { roles, noteActivity } = props.data;
   return (
     <>

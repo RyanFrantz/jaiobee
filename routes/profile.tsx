@@ -15,10 +15,8 @@ export const handler: Handlers = {
 export default function Profile(props: PageProps) {
   const { profile } = props.data;
   return (
-    <>
-      <div id="profile-container">
-        <UserProfile profile={profile} />
-      </div>
-    </>
+    <div id="profile-container">
+      <UserProfile profile={profile} />
+    </div>
   );
 }

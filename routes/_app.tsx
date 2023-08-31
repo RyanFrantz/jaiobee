@@ -5,11 +5,6 @@ import { AppContext } from "$fresh/server.ts";
 import Header from "../components/Header.tsx";
 import { isAuthenticated } from "../lib/utils.ts";
 import GoogleAnalytics from "../components/GoogleAnalytics.tsx";
-/*
-import userState, { UserDateTimeFormat } from "../context/UserContext.ts"
-// Export this so we can expose it as a singleton for later useContext() calls.
-export const UserContext = createContext<UserDateTimeFormat>({} as UserDateTimeFormat)
-*/
 import UserContextProvider from "../components/UserContextProvider.tsx";
 import UserLocale from "../components/UserLocale.tsx";
 

@@ -60,7 +60,7 @@ export default function RoleInputs({ role, action }) {
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md placeholder:italic placeholder:text-gray-400"
               placeholder="https://example.com/careers/123"
               pattern="https?://.*"
-              value={role?.["jobPostingUrl"]}
+              value={role?.jobPostingUrl}
             />
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">

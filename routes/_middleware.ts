@@ -3,10 +3,18 @@ import {
   deleteCookie,
   getCookies,
 } from "https://deno.land/std@0.195.0/http/cookie.ts";
-import { ACCESS_COOKIE, REFRESH_COOKIE } from "../lib/constants.ts";
+import {
+  ACCESS_COOKIE,
+  LOCALE_COOKIE,
+  REFRESH_COOKIE,
+} from "../lib/constants.ts";
 import supabase from "../lib/supabase.ts";
 import { isValidJWT, userIdFromJwt } from "../lib/authentication.ts";
-import { genCookies, isProtectedRoute } from "../lib/utils.ts";
+import {
+  decodeLocaleCookie,
+  genCookies,
+  isProtectedRoute,
+} from "../lib/utils.ts";
 
 export async function handler(
   req: Request,
@@ -14,6 +22,11 @@ export async function handler(
 ) {
   const cookies = getCookies(req.headers);
   const url = new URL(req.url);
+
+  if (cookies[LOCALE_COOKIE]) {
+    const dateTimeFormat = decodeLocaleCookie(cookies[LOCALE_COOKIE]);
+    ctx.state.dateTimeFormat = dateTimeFormat;
+  }
 
   if (isProtectedRoute(url.pathname)) {
     // As long as our cookie is present and defined...

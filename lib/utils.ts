@@ -20,6 +20,20 @@ const epochToLocale = (
   });
 };
 
+// Return an object representing the locale and timezone info gleaned from
+// the browser's DateTimeFormat.
+const decodeLocaleCookie = (cookie: string): object | null => {
+  // Ex. {locale: "en-US", timeZone: "America/New_York"}
+  let dateTimeFormat;
+  try {
+    dateTimeFormat = JSON.parse(atob(cookie));
+  } catch (err) {
+    console.log("Error parsing locale cookie:", err);
+    return null;
+  }
+  return dateTimeFormat;
+};
+
 /* A set of regular expressions representing routes we'll use to check for
  * the presence of a cookie.
  * NOTE: This being the top-level middleware, we'll omit some routes we
@@ -72,4 +86,11 @@ const genCookies = (url: URL, access_token: string, refresh_token: string) => {
   return headers;
 };
 
-export { epoch, epochToLocale, genCookies, isAuthenticated, isProtectedRoute };
+export {
+  decodeLocaleCookie,
+  epoch,
+  epochToLocale,
+  genCookies,
+  isAuthenticated,
+  isProtectedRoute,
+};

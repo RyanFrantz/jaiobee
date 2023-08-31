@@ -1,4 +1,5 @@
 import { useEffect } from "preact/hooks";
+import { LOCALE_COOKIE } from "../lib/constants.ts";
 
 // Detect the user's locale and date formatting options and set a cookie
 // with that information. This island is expected to be run for every request
@@ -12,7 +13,7 @@ export default function DetectUserLocale() {
     // Use hostname for consistency.
     const domain = new URL(location.origin).hostname;
     const localeCookie = [
-      `locale=${cookieValue}`,
+      `${LOCALE_COOKIE}=${cookieValue}`,
       `Domain=${domain}`,
       "Path=/",
       "Max-Age=3600",

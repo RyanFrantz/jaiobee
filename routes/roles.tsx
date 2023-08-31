@@ -8,20 +8,24 @@ import { getNoteActivity, getRoles } from "../lib/store.ts";
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
-    const userId = ctx.state.userId;
+    const { dateTimeFormat, userId } = ctx.state;
     const roles = await getRoles(userId);
     const noteActivity = await getNoteActivity(userId);
-    return await ctx.render({ roles, noteActivity });
+    return await ctx.render({ roles, noteActivity, dateTimeFormat });
   },
 };
 
 export default function Roles(props: PageProps) {
-  const { roles, noteActivity } = props.data;
+  const { roles, noteActivity, dateTimeFormat } = props.data;
   return (
     <>
       <div id="roles-container">
         <AddRoleButton />
-        <RoleTable roles={roles} noteActivity={noteActivity} />
+        <RoleTable
+          roles={roles}
+          noteActivity={noteActivity}
+          dateTimeFormat={dateTimeFormat}
+        />
       </div>
     </>
   );

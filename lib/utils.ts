@@ -22,14 +22,14 @@ const epochToLocale = (
 
 // Return an object representing the locale and timezone info gleaned from
 // the browser's DateTimeFormat.
-const decodeLocaleCookie = (cookie: string): object | null => {
+const decodeLocaleCookie = (cookie: string): object => {
   // Ex. {locale: "en-US", timeZone: "America/New_York"}
   let dateTimeFormat;
   try {
     dateTimeFormat = JSON.parse(atob(cookie));
   } catch (err) {
     console.log("Error parsing locale cookie:", err);
-    return null;
+    return {locale: "en-US", timeZone: "America/New_York"}; // Sane default.
   }
   return dateTimeFormat;
 };

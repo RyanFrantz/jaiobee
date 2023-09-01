@@ -11,7 +11,7 @@ export const handler: Handlers = {
     // /role/8/edit
     //       ^
     const roleId = Number(url.pathname.split("/")[2]);
-    const userId = ctx.state.userId;
+    const { dateTimeFormat, userId } = ctx.state;
     let [statusCode, role] = await getRole(userId, roleId);
     if (statusCode !== 200) {
       role = {};
@@ -20,7 +20,7 @@ export const handler: Handlers = {
     const body = render(
       <div id="role-container">
         <EditButtonRow roleId={roleId} />
-        <RoleForm role={role} action="edit" />
+        <RoleForm role={role} action="edit" dateTimeFormat={dateTimeFormat} />
       </div>,
     );
     const headers = new Headers();

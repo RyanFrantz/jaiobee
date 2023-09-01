@@ -1,10 +1,13 @@
 import { epochToLocale } from "../lib/utils.ts";
 import { roleStatusTypes } from "./roleStatusTypes.ts";
 
-export default function RoleInputs({ role, action }) {
+export default function RoleInputs({ role, action, dateTimeFormat }) {
   // Possible action values are "add" and "edit" because this form is used
   // to add new roles as well as edit existing roles.
   const isEditing = action == "edit";
+  // We only receive dateTimeFormat during edits (no need to display time during
+  // adds).
+  const { locale, timeZone } = dateTimeFormat || { undefined, undefined };
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
   return (
@@ -90,7 +93,7 @@ export default function RoleInputs({ role, action }) {
                   name="createdAt"
                   class="w-1/2 mt-1 text-sm"
                 >
-                  {epochToLocale(role.createdAt)}
+                  {epochToLocale(role.createdAt, locale, timeZone)}
                 </span>
               </div>
             )

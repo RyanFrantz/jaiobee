@@ -10,8 +10,9 @@ export const handler: Handlers = {
     // /role/8/notes
     //       ^
     const roleId = Number(url.pathname.split("/")[2]);
-    const userId = ctx.state.userId;
+    const { dateTimeFormat, userId } = ctx.state;
     const notes = await getNotes(userId, roleId);
+    const { locale, timeZone } = dateTimeFormat;
     const body = render(
       <>
         {
@@ -30,7 +31,7 @@ export const handler: Handlers = {
           {notes.reverse().map((note) => (
             <div class="w-full mt-1 p-2 border border-solid rounded-lg text-sm flex justify-start border-gray-400">
               <div class="px-2 text-white bg-emerald-500 rounded-full">
-                {epochToLocale(note.createdAt)}
+                {epochToLocale(note.createdAt, locale, timeZone)}
               </div>
               <div class="mx-2">
                 {note.message}

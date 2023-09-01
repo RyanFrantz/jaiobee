@@ -1,6 +1,7 @@
 import { epochToLocale } from "../lib/utils.ts";
 
-export default function UserProfile({ profile }) {
+export default function UserProfile({ profile, dateTimeFormat }) {
+  const { locale, timeZone } = dateTimeFormat;
   return (
     <div class="flex flex-1 flex-col justify-center px-6 py-12">
       <div
@@ -28,7 +29,7 @@ export default function UserProfile({ profile }) {
             </label>
           </div>
           <div>
-            {epochToLocale(profile.createdAt)}
+            {epochToLocale(profile.createdAt, locale, timeZone)}
           </div>
           <div>
             <label class="mt-2 underline">

@@ -5,18 +5,18 @@ import { sendMetric } from "../lib/metrics.ts";
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
-    const userId = ctx.state.userId;
+    const { dateTimeFormat, userId } = ctx.state;
     const profile = await getUser(userId);
     sendMetric("profileViewed");
-    return await ctx.render({ profile });
+    return await ctx.render({ profile, dateTimeFormat });
   },
 };
 
 export default function Profile(props: PageProps) {
-  const { profile } = props.data;
+  const { profile, dateTimeFormat } = props.data;
   return (
     <div id="profile-container">
-      <UserProfile profile={profile} />
+      <UserProfile profile={profile} dateTimeFormat={dateTimeFormat} />
     </div>
   );
 }

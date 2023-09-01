@@ -1,7 +1,8 @@
 import { epochToLocale } from "../lib/utils.ts";
 import { roleStatusTypes } from "./roleStatusTypes.ts";
 
-export default function RoleDetails({ role }) {
+export default function RoleDetails({ dateTimeFormat, role }) {
+  const { locale, timeZone } = dateTimeFormat;
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
   return (
@@ -74,7 +75,7 @@ export default function RoleDetails({ role }) {
               name="createdAt"
               class="w-1/2 mt-1 text-sm"
             >
-              {epochToLocale(role.createdAt)}
+              {epochToLocale(role.createdAt, locale, timeZone)}
             </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">

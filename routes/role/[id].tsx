@@ -47,12 +47,12 @@ export const handler: Handlers = {
 };
 
 export default function Role(props) {
-  const { role, roleId } = props.data;
+  const { role, roleId, dateTimeFormat } = props.data;
   return (
     <>
       <div id="role-container">
         <EditRoleButton roleId={roleId} />
-        <RoleDetails role={role} />
+        <RoleDetails role={role} dateTimeFormat={dateTimeFormat} />
       </div>
       <div
         id="note-container"

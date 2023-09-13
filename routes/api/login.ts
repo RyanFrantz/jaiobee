@@ -4,7 +4,7 @@ import { setCookie } from "https://deno.land/std@0.195.0/http/cookie.ts";
 import supabase from "../../lib/supabase.ts";
 import { userIdFromJwt } from "../../lib/authentication.ts";
 import { updateLastLogin } from "../../lib/store.ts";
-import { sendMetric } from "../../lib/metrics.ts";
+import { sendMetric, sendMetricDirect } from "../../lib/metrics.ts";
 
 // TODO: Offer the user a chance to log in again if they experience an error.
 const login = async (email: string, password: string): [number, object] => {
@@ -23,6 +23,7 @@ const login = async (email: string, password: string): [number, object] => {
   // TODO: Look up a user's payments status. If they're beyond a trial period,
   // redirect them to a checkout page.
   sendMetric("loginSuccess");
+  sendMetricDirect("loginSuccessWithNewSupport");
   return [302, {
     access_token: data.session.access_token,
     refresh_token: data.session.refresh_token,

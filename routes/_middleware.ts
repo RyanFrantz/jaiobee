@@ -15,6 +15,7 @@ import {
   genCookies,
   isProtectedRoute,
 } from "../lib/utils.ts";
+import { sendMetric } from "../lib/metrics.ts";
 
 export async function handler(
   req: Request,
@@ -49,7 +50,6 @@ export async function handler(
       ctx.state.userId = userIdFromJwt(cookies[ACCESS_COOKIE]);
     } else {
       if (cookies[REFRESH_COOKIE]) {
-        console.log("Attempting token refresh");
         const { data, error } = await supabase.auth.refreshSession({
           refresh_token: cookies[REFRESH_COOKIE],
         });
@@ -57,6 +57,7 @@ export async function handler(
           console.log(
             `Failed to refresh token: ${error.message}. Redirecting to /login`,
           );
+          sendMetric("tokenRefreshFailedAndLoginRedirect");
           // Clear user state.
           ctx.state.userId = undefined;
           // Clear cookies and redirect to /login.
@@ -71,6 +72,7 @@ export async function handler(
             status: 302,
           });
         }
+        sendMetric("tokenRefreshSuccess");
         // Extract the tokens from the session.
         const { access_token, refresh_token } = data.session;
         const headers = genCookies(url, access_token, refresh_token);

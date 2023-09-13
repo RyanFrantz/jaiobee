@@ -10,7 +10,7 @@ import { OTLPMetricExporter } from "npm:@opentelemetry/exporter-metrics-otlp-pro
 
 const honeycombTeam = Deno.env.get("HONEYCOMB_TEAM");
 const honeycombDataset = Deno.env.get("HONEYCOMB_DATASET");
-const denoRegion = Deno.env.get("DENO_REGION") || "local-dev-or-digital-ocean";
+const denoRegion = Deno.env.get("DENO_REGION") || "local-dev"; // Set by Deno Deploy.
 
 // Initialize our OTLP rig and return a Meter that we can use to register
 // instruments.

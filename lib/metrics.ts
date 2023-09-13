@@ -1,27 +1,3 @@
-////// TO BE DEPRECATED SOON
-
-const orlySecret = Deno.env.get("ORLY_SECRET") || "";
-const orlyBaseUrl = "https://orly.relaymetrics.pro";
-
-const headers = {
-  "Authorization": `Bearer ${orlySecret}`
-};
-
-// Given a string representing a counter we want to increment, issue a request
-// to our OpenTelemetry relay service.
-const sendMetric = async(metricName: string) => {
-  const url = `${orlyBaseUrl}/${metricName}`;
-  try {
-    await fetch(url, {
-      headers: headers
-    })
-  } catch (error) {
-    console.log(`Failed to send metric '${metricName}': ${error}`);
-  }
-};
-
-//////
-
 import { metrics } from "https://esm.sh/@opentelemetry/api@1.6.0";
 import { Resource } from "https://esm.sh/@opentelemetry/resources@1.17.0";
 import {
@@ -74,10 +50,10 @@ const meter = initOTLP();
 
 // Given a string representing a counter, register an instrument by that name
 // and increment it.
-const sendMetricDirect = (counterName: string): void => {
+const sendMetric = (counterName: string): void => {
   const counter = meter.createCounter(counterName);
   // Annotate with the Deno region.
   counter.add(1, { denoRegion: denoRegion });
 };
 
-export { sendMetric, sendMetricDirect };
+export { sendMetric };

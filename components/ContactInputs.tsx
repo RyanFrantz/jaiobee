@@ -13,30 +13,33 @@ export default function ContactInputs({ contact, action, dateTimeFormat }) {
     <>
       {/* Super grid */}
       <div class="grid grid-cols-3 border border-solid border-gray-400 rounded-b-lg">
-        {/* Role details */}
+        {/* Contact details */}
         <div class="col-span-2 p-4 grid grid-cols-2">
-          <div class="col-span-2 mt-2 mr-2">
+          <div class="col-span-1 mt-2 mr-2">
             {/* "block" pushes the label above the input */}
-            <label for="title" class="block text-sm pr-2">Title</label>
+            <label for="name" class="block text-sm pr-2">
+              Name
+            </label>
             <input
               type="text"
-              name="title"
+              name="name"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
               required
               value={contact?.name}
             />
           </div>
           <div class="col-span-1 mt-2 mr-2">
-            <label for="company" class="block text-sm pr-1">Company</label>
+            <label for="company" class="block text-sm pr-1">
+              Company
+            </label>
             <input
               type="text"
               name="company"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-              required
               value={contact?.company}
             />
           </div>
-          <div class="lg:col-span-2 mt-2 mr-2">
+          <div class="lg:col-span-1 mt-2 mr-2">
             <label for="phone" class="block text-sm pr-1">
               Phone
             </label>
@@ -49,16 +52,16 @@ export default function ContactInputs({ contact, action, dateTimeFormat }) {
               value={contact?.phone}
             />
           </div>
-          <div class="lg:col-span-2 mt-2 mr-2">
+          <div class="lg:col-span-1 mt-2 mr-2">
             <label for="email" class="block text-sm pr-1">
-              Phone
+              Email
             </label>
             <input
               type="email"
               name="email"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md placeholder:italic placeholder:text-gray-400"
               placeholder="jane@jaiobee.com"
-              value={contact?.phone}
+              value={contact?.email}
             />
           </div>
           <div class="lg:col-span-2 mt-2 mr-2">

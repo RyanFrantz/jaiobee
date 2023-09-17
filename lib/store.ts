@@ -102,6 +102,17 @@ const getNotes = async (userId: string, roleId: number) => {
   return notes;
 };
 
+const getContactNotes = async (userId: string, contactId: number) => {
+  const kv = await Deno.openKv();
+  const entries = await kv.list({ prefix: [userId, "contactNotes", contactId] });
+  const notes = [];
+  for await (const entry of entries) {
+    notes.push(entry.value);
+  }
+  kv.close();
+  return notes;
+};
+
 // Look up a single role.
 // Returns an HTTP status code and an object with helpful context.
 // FIXME: Return hypermedia instead of JSON?
@@ -200,6 +211,23 @@ const updateNoteActivity = async (
   }
 };
 
+const updateContactNoteActivity = async (
+  userId: string,
+  contactId: number,
+  epoch: number,
+) => {
+  const kv = await Deno.openKv();
+  try {
+    await kv.set([userId, "contactNoteActivity", contactId], epoch);
+  } catch (err) {
+    console.log(
+      `Failed to update contact note activity on role ${contactId} for userId ${userId}: ${err}`,
+    );
+  } finally {
+    kv.close();
+  }
+};
+
 // Fetches all note activity values. Returns an object whose values represent
 // the last activity timestamp for a role's notes, keyed by role ID.
 const getNoteActivity = async (userId: string) => {
@@ -209,6 +237,18 @@ const getNoteActivity = async (userId: string) => {
   for await (const entry of entries) {
     const roleId = entry.key.slice(-1); // roleId is the last part of the key.
     activity[roleId] = entry.value;
+  }
+  kv.close();
+  return activity;
+};
+
+const getContactNoteActivity = async (userId: string) => {
+  const kv = await Deno.openKv();
+  const activity = {};
+  const entries = await kv.list({ prefix: [userId, "contactNoteActivity"] });
+  for await (const entry of entries) {
+    const contactId = entry.key.slice(-1); // contactId is the last part of the key.
+    activity[contactId] = entry.value;
   }
   kv.close();
   return activity;
@@ -325,17 +365,200 @@ const updateRole = async (
   return [statusCode, response];
 };
 
-// TODO: Add getRole(userId, roleId). Pair with /routes/role/[id].tsx
+const getContacts = async (userId: string) => {
+  const kv = await Deno.openKv();
+  const entries = await kv.list({ prefix: [userId, "contacts"] });
+  const contacts = [];
+  for await (const entry of entries) {
+    contacts.push(entry.value);
+  }
+  kv.close();
+  return contacts;
+};
+
+const getContact = async (userId: string, contactId: number): [number, object] => {
+  const kv = await Deno.openKv();
+  const contact = await kv.get([userId, "contacts", contactId]);
+  kv.close();
+  if (contact) {
+    return [200, contact.value];
+  } else {
+    return [404, { message: "Contact not found." }];
+  }
+};
+
+const addContactNote = async (
+  userId: string,
+  contactId: number,
+  note,
+): [number, object] => {
+  const notes = await getContactNotes(userId, contactId);
+  const noteIds = notes.map((n) => n.id);
+  const desc = (a, b) => {
+    return b - a;
+  };
+  let nextId;
+  if (noteIds.length > 0) {
+    nextId = noteIds.sort(desc)[0] + 1;
+  } else {
+    nextId = 1;
+  }
+  note.id = nextId;
+  if (note.createdAt.length == 0) {
+    // Set it by default.
+    note.createdAt = epoch();
+  } else {
+    // Should be a number but the form passed it as a string.
+    note.createdAt = parseInt(note.createdAt);
+  }
+  let [statusCode, response] = [201, {}]; // Sane default/starting point.
+  const kv = await Deno.openKv();
+  try {
+    await kv.set([userId, "contactNotes", contactId, note.id], note);
+    sendMetric("contactNoteAdded");
+    response = { noteId: nextId, message: "Contact note added successfully" };
+  } catch (err) {
+    statusCode = 500;
+    response.message = err;
+    console.log(
+      `Failed to add note to contact ${contactId} for userId ${userId}: ${err}`,
+    );
+  } finally {
+    kv.close();
+  }
+  await updateContactNoteActivity(userId, contactId, epoch());
+  return [statusCode, response];
+};
+
+const addContact = async (userId: string, contact): [number, object] => {
+  const contacts = await getContacts(userId);
+  const contactIds = contacts.map((c) => c.id);
+  const desc = (a, b) => {
+    return b - a;
+  };
+  let nextId;
+  if (contactIds.length > 0) {
+    nextId = contactIds.sort(desc)[0] + 1;
+  } else {
+    nextId = 1;
+  }
+  contact.id = nextId;
+  if ("createdAt" in contact && contact.createdAt.length == 0) {
+    // Set it by default.
+    contact.createdAt = epoch();
+  } else {
+    // The value of "createdAt" should be a number but the form passed it
+    // as a string.
+    contact.createdAt = parseInt(contact.createdAt);
+  }
+  // FIXME: I'm being lazy with this copypasta.
+  if ("updatedAt" in contact && contact.updatedAt.length == 0) {
+    // Set it by default.
+    contact.updatedAt = epoch();
+  } else {
+    // The value of "updatedAt" should be a number but the form passed it
+    // as a string.
+    contact.updatedAt = parseInt(contact.updatedAt);
+  }
+  let [statusCode, response] = [201, {}]; // Sane default/starting point.
+  const kv = await Deno.openKv();
+  try {
+    // The combination of user ID and role ID will be the key.
+    await kv.set([userId, "contacts", contact.id], contact);
+    sendMetric("contactAdded");
+    response = { contactId: nextId, message: "Contact added successfully" };
+  } catch (err) {
+    statusCode = 500;
+    response.message = err;
+    console.log(`Failed to add contact for userId ${userId}: ${err}`);
+  } finally {
+    kv.close();
+  }
+
+  // First note!
+  const note = {
+    createdAt: contact.createdAt,
+    message: "Added contact.",
+  };
+  await addContactNote(userId, contact.id, note);
+
+  return [statusCode, response];
+};
+
+// A very naive solution to finding differences between objects.
+// Returns an array of strings describing what has changed.
+const contactChanges = (existingContact, newContact) => {
+  const changes = [];
+  for (const key of Object.keys(existingContact)) {
+    if (existingContact[key] !== newContact[key]) {
+      // Never directly changed by form inputs.
+      if (key == "createdAt" || key == "updatedAt") {
+        continue;
+      }
+      changes.push(
+        `${key} changed from "${existingContact[key]}" to "${newContact[key]}"`,
+      );
+    }
+  }
+  return changes;
+};
+
+const updateContact = async (
+  userId: string,
+  contactId: number,
+  contact,
+): [number, object] => {
+  const [getContactStatusCode, existingContact] = await getContact(userId, contactId);
+  // The ID is not part of the form data so we add it back, here.
+  contact.id = contactId;
+  let [statusCode, response] = [200, {}]; // Sane default/starting point.
+  if (getContactStatusCode == 200) {
+    const changes = contactChanges(existingContact, contact);
+    if (changes.length > 0) {
+      // FIXME: Test for failure.
+      for (const change of changes) {
+        const note = makeNote(change);
+        await addContactNote(userId, contactId, note);
+      }
+    }
+    // Merge the updated contact properties with the existing contact.
+    // This ensures the "createdAt" property is retained.
+    const updatedContact = Object.assign(existingContact, contact);
+    updatedContact.updatedAt = epoch();
+    const kv = await Deno.openKv();
+    try {
+      // Replace the role entirely.
+      await kv.set([userId, "contacts", contactId], updatedContact);
+      sendMetric("contactUpdated");
+      response = { contactId: contactId, message: "Contact updated successfully" };
+    } catch (err) {
+      statusCode = 500;
+      response.message = err;
+      console.log(`Failed to update contact for userId ${userId}: ${err}`);
+    } finally {
+      kv.close();
+    }
+  }
+  return [statusCode, response];
+};
+
 export {
+  addContact,
+  addContactNote,
   addNote,
   addRole,
   addUser,
+  getContact,
+  getContactNotes,
+  getContacts,
+  getContactNoteActivity,
   getNoteActivity,
   getNotes,
   getRole,
   getRoles,
   getUser,
   makeNote,
+  updateContact,
   updateLastLogin,
   updateRole,
 };

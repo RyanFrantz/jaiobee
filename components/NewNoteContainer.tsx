@@ -1,23 +1,17 @@
-import AddNoteButton from "./AddNoteButton.tsx";
+import NewNoteForm from "./NewNoteForm.tsx";
 
-export default function NewNoteContainer({ roleId }) {
+// Either one of a contactId or a roleId prop will be passed in.
+// Use their presence to determine which URL to POST to.
+export default function NewNoteContainer({ contactId, roleId }) {
+  const isContactNote = contactId !== undefined;
   return (
     <div id="new-note-container">
-      <form
-        id="new-note"
-        class="w-full px-2 py-1 border border-solid rounded-lg text-sm border-gray-400 flex justify-between"
-        hx-post={"/role/" + roleId + "/note/add"}
-      >
-        <textarea
-          rows="1"
-          class="w-5/6 p-1 border border-solid border-gray-400 rounded-lg"
-          name="new-note"
-        >
-        </textarea>
-        <div class="flex justify-end">
-          <AddNoteButton />
-        </div>
-      </form>
+      {isContactNote ?
+      (
+        <NewNoteForm parentType="contact" parentId={contactId} />
+      ) : (
+        <NewNoteForm parentType="role" parentId={roleId} />
+      )}
     </div>
   );
 }

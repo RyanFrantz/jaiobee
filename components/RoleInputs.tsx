@@ -1,7 +1,19 @@
 import { epochToLocale } from "../lib/utils.ts";
 import { roleStatusTypes } from "./roleStatusTypes.ts";
 
-export default function RoleInputs({ role, action, dateTimeFormat }) {
+export default function RoleInputs({ role, contacts, action, dateTimeFormat }) {
+  // If contacts are not set (or are, but can't be parsed), define some
+  // properties (as undefined) to pass muster below.
+  try {
+    role.recruiterContact = JSON.parse(role.recruiterContact);
+  } catch {
+    role.recruiterContact = { id: undefined, name: undefined };
+  }
+  try {
+    role.referralContact = JSON.parse(role.referralContact);
+  } catch {
+    role.referralContact = { id: undefined, name: undefined };
+  }
   // Possible action values are "add" and "edit" because this form is used
   // to add new roles as well as edit existing roles.
   const isEditing = action == "edit";
@@ -131,23 +143,39 @@ export default function RoleInputs({ role, action, dateTimeFormat }) {
             <label for="referralContact" class="block text-sm pr-1">
               Referral Contact
             </label>
-            <input
-              type="text"
+            <select
               name="referralContact"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-              value={role?.referralContact}
-            />
+            >
+              <option value="">None</option>
+              {contacts.map((contact) => (
+                <option
+                  value={JSON.stringify(contact)}
+                  selected={role?.referralContact?.id == contact.id}
+                >
+                  {contact.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div class="col-span-1 mt-2 mr-2">
             <label for="recruiterContact" class="block text-sm pr-1">
               Recruiter Contact
             </label>
-            <input
-              type="text"
+            <select
               name="recruiterContact"
               class="w-full mt-1 p-1 text-sm border border-solid border-gray-400 rounded-md"
-              value={role?.recruiterContact}
-            />
+            >
+              <option value="">None</option>
+              {contacts.map((contact) => (
+                <option
+                  value={JSON.stringify(contact)}
+                  selected={role?.recruiterContact?.id == contact.id}
+                >
+                  {contact.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>

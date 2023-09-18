@@ -3,6 +3,23 @@ import { roleStatusTypes } from "./roleStatusTypes.ts";
 
 export default function RoleDetails({ dateTimeFormat, role }) {
   const { locale, timeZone } = dateTimeFormat;
+  // For display only, parse the contact object for easier access below.
+  // If no contact exists, parsing fails and we use generic values for display.
+  let hasValidRecruiterContact, hasValidReferralContact: boolean;
+  try {
+    role.recruiterContact = JSON.parse(role.recruiterContact);
+    hasValidRecruiterContact = true;
+  } catch {
+    hasValidRecruiterContact = false;
+  }
+
+  try {
+    role.referralContact = JSON.parse(role.referralContact);
+    hasValidReferralContact = true;
+  } catch {
+    hasValidReferralContact = false;
+  }
+
   // Returns a super grid 3 columns wide, with two nested grids; the first is 2
   // colums wide and the second is 1 column wide.
   return (
@@ -86,7 +103,16 @@ export default function RoleDetails({ dateTimeFormat, role }) {
               name="referralContact"
               class="w-full mt-1 text-sm"
             >
-              {role?.referralContact || "N/A"}
+              { hasValidReferralContact ? (
+              <a
+                class="text-sky-600 hover:underline"
+                href={"/contact/" + role?.referralContact?.id}
+              >
+                {role?.referralContact?.name}
+              </a>
+              ) : (
+              <>{"N/A"}</>
+              )}
             </span>
           </div>
           <div class="col-span-1 mt-2 mr-2">
@@ -97,7 +123,16 @@ export default function RoleDetails({ dateTimeFormat, role }) {
               name="recruiterContact"
               class="w-full mt-1 text-sm"
             >
-              {role?.recruiterContact || "N/A"}
+              { hasValidRecruiterContact ? (
+              <a
+                class="text-sky-600 hover:underline"
+                href={"/contact/" + role?.recruiterContact?.id}
+              >
+                {role?.recruiterContact?.name}
+              </a>
+              ) : (
+              <>{"N/A"}</>
+              )}
             </span>
           </div>
         </div>

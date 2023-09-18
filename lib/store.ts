@@ -316,11 +316,18 @@ const roleChanges = (existingRole, newRole) => {
       if (key == "createdAt" || key == "updatedAt") {
         continue;
       }
-      changes.push(
-        `${friendlyRoleProperties[key]} changed from "${
-          existingRole[key]
-        }" to "${newRole[key]}"`,
-      );
+      if (key == "referralContact" || key == "recruiterContact") {
+        const partialMessage = roleContactChanges(existingRole[key], newRole[key]);
+        changes.push(
+          `${friendlyRoleProperties[key]} changed from ${partialMessage}`
+        );
+      } else {
+        changes.push(
+          `${friendlyRoleProperties[key]} changed from "${
+            existingRole[key]
+          }" to "${newRole[key]}"`,
+        );
+      }
     }
   }
   return changes;
@@ -501,6 +508,23 @@ const contactChanges = (existingContact, newContact) => {
     }
   }
   return changes;
+};
+
+// Returns a message describing contact changes within the context of a role.
+const roleContactChanges = (existingContact, newContact): string => {
+  // New contacts are _always_ stringified JSON objects.
+  let nc;
+  try {
+    nc = JSON.parse(newContact);
+  } catch {
+    nc = {name: ""}
+  }
+  // Presumes the value is a stringified JSON object.
+  if (existingContact.length > 0) {
+    const ec = JSON.parse(existingContact);
+    return `"${ec.name}" to "${nc.name}"`;
+  }
+  return `"" to ${nc.name}`;
 };
 
 const updateContact = async (

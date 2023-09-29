@@ -19,7 +19,7 @@ const addUser = async (
 
   const kv = await Deno.openKv();
   try {
-    await kv.set(["users", userId, "profile"], profile);
+    await kv.set(["users", "profile", userId], profile);
     response = { userId: userId, message: "User added successfully" };
   } catch (err) {
     statusCode = 500;
@@ -35,10 +35,23 @@ const addUser = async (
 const getUser = async (userId: string) => {
   let profile;
   const kv = await Deno.openKv();
-  const entry = await kv.get(["users", userId, "profile"]);
+  const entry = await kv.get(["users", "profile", userId]);
   profile = entry.value;
   kv.close();
   return profile;
+};
+
+// WARN: This is a privileged operation.
+// TODO: Add check for 'admin' user/role.
+const getUserProfiles = async () => {
+  const kv = await Deno.openKv();
+  const profiles = [];
+  const entries = await kv.list({ prefix: ["users", "profile"] });
+  for await (const entry of entries) {
+    profiles.push(entry.value);
+  }
+  kv.close();
+  return profiles;
 };
 
 // Track the last time a user logged in.
@@ -581,6 +594,7 @@ export {
   getRole,
   getRoles,
   getUser,
+  getUserProfiles,
   makeNote,
   updateContact,
   updateLastLogin,

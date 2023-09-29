@@ -42,6 +42,7 @@ const decodeLocaleCookie = (cookie: string): object => {
  * For example, /api routes will be protected in in routes/api/_middleware.ts.
  */
 const protectedRoutes = [
+  /^\/admin/,
   /^\/contacts/,
   /^\/role/, // /roles, /role/[id]...
   /^\/profile/,

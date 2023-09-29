@@ -2,7 +2,6 @@ import { epochToLocale } from "../lib/utils.ts";
 import { roleStatusTypes } from "./roleStatusTypes.ts";
 
 export default function RoleInputs({ role, contacts, action, dateTimeFormat }) {
-  console.log(contacts)
   // If contacts are not set (or are, but can't be parsed), define some
   // properties (as undefined) to pass muster below.
   try {

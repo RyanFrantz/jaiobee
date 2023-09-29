@@ -4,56 +4,58 @@
 
 import * as $0 from "./routes/_app.tsx";
 import * as $1 from "./routes/_middleware.ts";
-import * as $2 from "./routes/admin/index.tsx";
-import * as $3 from "./routes/api/_middleware.ts";
-import * as $4 from "./routes/api/login.ts";
-import * as $5 from "./routes/api/signup.ts";
-import * as $6 from "./routes/buy.tsx";
-import * as $7 from "./routes/contact/[id].tsx";
-import * as $8 from "./routes/contact/[id]/edit.tsx";
-import * as $9 from "./routes/contact/[id]/note/add.tsx";
-import * as $10 from "./routes/contact/[id]/notes.tsx";
-import * as $11 from "./routes/contact/add.tsx";
-import * as $12 from "./routes/contacts.tsx";
-import * as $13 from "./routes/index.tsx";
-import * as $14 from "./routes/login.tsx";
-import * as $15 from "./routes/profile.tsx";
-import * as $16 from "./routes/role/[id].tsx";
-import * as $17 from "./routes/role/[id]/edit.tsx";
-import * as $18 from "./routes/role/[id]/note/add.tsx";
-import * as $19 from "./routes/role/[id]/notes.tsx";
-import * as $20 from "./routes/role/add.tsx";
-import * as $21 from "./routes/roles.tsx";
-import * as $22 from "./routes/signout.ts";
-import * as $23 from "./routes/signup.tsx";
+import * as $2 from "./routes/admin/_middleware.ts";
+import * as $3 from "./routes/admin/index.tsx";
+import * as $4 from "./routes/api/_middleware.ts";
+import * as $5 from "./routes/api/login.ts";
+import * as $6 from "./routes/api/signup.ts";
+import * as $7 from "./routes/buy.tsx";
+import * as $8 from "./routes/contact/[id].tsx";
+import * as $9 from "./routes/contact/[id]/edit.tsx";
+import * as $10 from "./routes/contact/[id]/note/add.tsx";
+import * as $11 from "./routes/contact/[id]/notes.tsx";
+import * as $12 from "./routes/contact/add.tsx";
+import * as $13 from "./routes/contacts.tsx";
+import * as $14 from "./routes/index.tsx";
+import * as $15 from "./routes/login.tsx";
+import * as $16 from "./routes/profile.tsx";
+import * as $17 from "./routes/role/[id].tsx";
+import * as $18 from "./routes/role/[id]/edit.tsx";
+import * as $19 from "./routes/role/[id]/note/add.tsx";
+import * as $20 from "./routes/role/[id]/notes.tsx";
+import * as $21 from "./routes/role/add.tsx";
+import * as $22 from "./routes/roles.tsx";
+import * as $23 from "./routes/signout.ts";
+import * as $24 from "./routes/signup.tsx";
 import * as $$0 from "./islands/DetectUserLocale.tsx";
 
 const manifest = {
   routes: {
     "./routes/_app.tsx": $0,
     "./routes/_middleware.ts": $1,
-    "./routes/admin/index.tsx": $2,
-    "./routes/api/_middleware.ts": $3,
-    "./routes/api/login.ts": $4,
-    "./routes/api/signup.ts": $5,
-    "./routes/buy.tsx": $6,
-    "./routes/contact/[id].tsx": $7,
-    "./routes/contact/[id]/edit.tsx": $8,
-    "./routes/contact/[id]/note/add.tsx": $9,
-    "./routes/contact/[id]/notes.tsx": $10,
-    "./routes/contact/add.tsx": $11,
-    "./routes/contacts.tsx": $12,
-    "./routes/index.tsx": $13,
-    "./routes/login.tsx": $14,
-    "./routes/profile.tsx": $15,
-    "./routes/role/[id].tsx": $16,
-    "./routes/role/[id]/edit.tsx": $17,
-    "./routes/role/[id]/note/add.tsx": $18,
-    "./routes/role/[id]/notes.tsx": $19,
-    "./routes/role/add.tsx": $20,
-    "./routes/roles.tsx": $21,
-    "./routes/signout.ts": $22,
-    "./routes/signup.tsx": $23,
+    "./routes/admin/_middleware.ts": $2,
+    "./routes/admin/index.tsx": $3,
+    "./routes/api/_middleware.ts": $4,
+    "./routes/api/login.ts": $5,
+    "./routes/api/signup.ts": $6,
+    "./routes/buy.tsx": $7,
+    "./routes/contact/[id].tsx": $8,
+    "./routes/contact/[id]/edit.tsx": $9,
+    "./routes/contact/[id]/note/add.tsx": $10,
+    "./routes/contact/[id]/notes.tsx": $11,
+    "./routes/contact/add.tsx": $12,
+    "./routes/contacts.tsx": $13,
+    "./routes/index.tsx": $14,
+    "./routes/login.tsx": $15,
+    "./routes/profile.tsx": $16,
+    "./routes/role/[id].tsx": $17,
+    "./routes/role/[id]/edit.tsx": $18,
+    "./routes/role/[id]/note/add.tsx": $19,
+    "./routes/role/[id]/notes.tsx": $20,
+    "./routes/role/add.tsx": $21,
+    "./routes/roles.tsx": $22,
+    "./routes/signout.ts": $23,
+    "./routes/signup.tsx": $24,
   },
   islands: {
     "./islands/DetectUserLocale.tsx": $$0,

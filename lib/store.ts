@@ -41,8 +41,17 @@ const getUser = async (userId: string) => {
   return profile;
 };
 
-// WARN: This is a privileged operation.
-// TODO: Add check for 'admin' user/role.
+// Test if a user has been assigned the "admin" role.
+const isAdmin = async (userId: string): boolean => {
+  const kv = await Deno.openKv();
+  const entry = await kv.get(["roles", "admin"]);
+  const admins: Array<string> = entry.value || [];
+  kv.close();
+  return admins.includes(userId);
+};
+
+// WARN: This is a privileged operation. Any code using this MUST first
+// validate the user is an admin (see `isAdmin()`).
 const getUserProfiles = async () => {
   const kv = await Deno.openKv();
   const profiles = [];
@@ -595,6 +604,7 @@ export {
   getRoles,
   getUser,
   getUserProfiles,
+  isAdmin,
   makeNote,
   updateContact,
   updateLastLogin,

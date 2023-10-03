@@ -57,7 +57,9 @@ const getUserProfiles = async () => {
   const profiles = [];
   const entries = await kv.list({ prefix: ["users", "profile"] });
   for await (const entry of entries) {
-    profiles.push(entry.value);
+    const userId = entry.key[2];
+    const profile = {...entry.value, id: userId};
+    profiles.push(profile);
   }
   kv.close();
   return profiles;

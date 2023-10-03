@@ -39,7 +39,7 @@ export default function UserProfileTable({ userProfiles, dateTimeFormat }) {
             {userProfiles.map((userProfile) => (
               <tr>
                 <td class="p-4">
-                  <a href={"/user/" + 1} class="hover:underline">
+                  <a href={"/user/" + userProfile.id} class="hover:underline">
                     {userProfile.preferredName}
                   </a>
                 </td>

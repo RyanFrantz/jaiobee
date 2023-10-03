@@ -27,6 +27,7 @@ import * as $21 from "./routes/role/add.tsx";
 import * as $22 from "./routes/roles.tsx";
 import * as $23 from "./routes/signout.ts";
 import * as $24 from "./routes/signup.tsx";
+import * as $25 from "./routes/user/[id].tsx";
 import * as $$0 from "./islands/DetectUserLocale.tsx";
 
 const manifest = {
@@ -56,6 +57,7 @@ const manifest = {
     "./routes/roles.tsx": $22,
     "./routes/signout.ts": $23,
     "./routes/signup.tsx": $24,
+    "./routes/user/[id].tsx": $25,
   },
   islands: {
     "./islands/DetectUserLocale.tsx": $$0,

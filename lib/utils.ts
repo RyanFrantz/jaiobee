@@ -46,6 +46,7 @@ const protectedRoutes = [
   /^\/contacts/,
   /^\/role/, // /roles, /role/[id]...
   /^\/profile/,
+  /^\/user/,
 ];
 
 // Returns truthy if a URL path matches a protected route; falsy otherwise.

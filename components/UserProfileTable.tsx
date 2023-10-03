@@ -29,7 +29,7 @@ export default function UserProfileTable({ userProfiles, dateTimeFormat }) {
               </th>
               <th class="p-4">
                 <div class="flex justify-center">
-                  Joined
+                  Account Created
                   <SortArrow />
                 </div>
               </th>

@@ -14,6 +14,9 @@ export default function AdminHome(props) {
   const { dateTimeFormat, userProfiles } = props.data;
   return (
     <>
+      <div class="px-2 text-sm flex justify-center">
+        All Users
+      </div>
       <UserProfileTable
         userProfiles={userProfiles}
         dateTimeFormat={dateTimeFormat}

@@ -3,43 +3,45 @@ import { epochToLocale } from "../lib/utils.ts";
 export default function UserProfile({ profile, dateTimeFormat }) {
   const { locale, timeZone } = dateTimeFormat;
   return (
-    <div class="flex flex-1 flex-col justify-center px-6 py-12">
-      <div
-        class="mx-auto flex flex-1 flex-col justify-center border border-solid border-gray-400 rounded-lg p-6"
-      >
-          <div>
-            <label class="mt-2 underline">
-              Preferred Name
-            </label>
-          </div>
-          <div>
-            {profile.preferredName}
-          </div>
-          <div>
-            <label class="mt-2 underline">
-              Email
-            </label>
-          </div>
-          <div>
-            {profile.email}
-          </div>
-          <div>
-            <label class="mt-2 underline">
-              Account Created
-            </label>
-          </div>
-          <div>
-            {epochToLocale(profile.createdAt, locale, timeZone)}
-          </div>
-          <div>
-            <label class="mt-2 underline">
-              Account Type
-            </label>
-          </div>
-          <div>
-            {profile.paymentStatus}
-          </div>
-      </div>
+    <div class="border border-solid border-gray-400 rounded-b-lg px-4">
+      <table class="table-auto text-sm">
+        <thead>
+          <tr>
+            <th class="p-4">
+              <div class="flex justify-center">
+                Preferred Name
+              </div>
+            </th>
+            <th class="p-4">
+              <div class="flex justify-center">
+                Email
+              </div>
+            </th>
+            <th class="p-4">
+              <div class="flex justify-center">
+                Status
+              </div>
+            </th>
+            <th class="p-4">
+              <div class="flex justify-center">
+                Account Created
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="p-4">
+              {profile.preferredName}
+            </td>
+            <td class="p-4">{profile.email}</td>
+            <td class="p-4">{profile.paymentStatus}</td>
+            <td class="p-4">
+              {epochToLocale(profile.createdAt, locale, timeZone)}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }

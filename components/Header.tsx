@@ -1,4 +1,4 @@
-export default function Header({ isAuthenticated }) {
+export default function Header({ isAuthenticated, isAdmin }) {
   // Adapted from https://tailwindui.com/components/application-ui/application-shells/stacked
   // Also lifted some navbar functionality from
   // https://tailwindui.com/components/application-ui/navigation/navbars
@@ -29,6 +29,13 @@ export default function Header({ isAuthenticated }) {
                 (isAuthenticated ? "" : " invisible")}
             >
               Contacts
+            </a>
+            <a
+              href="/admin"
+              class={"m-4 px-2 hover:bg-gray-300 rounded-full" +
+                (isAdmin ? "" : " invisible")}
+            >
+              Admin
             </a>
           </div>
           <div class="relative ml-3 flex items-center">

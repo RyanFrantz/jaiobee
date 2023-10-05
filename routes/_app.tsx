@@ -6,9 +6,15 @@ import Header from "../components/Header.tsx";
 import { isAuthenticated } from "../lib/utils.ts";
 import GoogleAnalytics from "../components/GoogleAnalytics.tsx";
 import DetectUserLocale from "../islands/DetectUserLocale.tsx";
+import { isAdmin } from "../lib/store.ts";
 
 export default async function App(_req: Request, ctx: AppContext) {
   const isAuthned = isAuthenticated(ctx);
+  let hasAdminRole = false;
+  if (isAuthned) {
+    const { userId } = ctx.state;
+    hasAdminRole = await isAdmin(userId);
+  }
   return (
     <>
       <Head>
@@ -22,7 +28,7 @@ export default async function App(_req: Request, ctx: AppContext) {
         <div class="px-6 py-12">
           <div class="text-lg">
             <div class="flex flex-col min-h-screen mx-auto max-w-7xl w-full">
-              <Header isAuthenticated={isAuthned} />
+              <Header isAuthenticated={isAuthned} isAdmin={hasAdminRole}/>
               <DetectUserLocale />
               <ctx.Component />
               {/* Future footer */}

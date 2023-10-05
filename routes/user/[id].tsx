@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { getContacts, getUser, getRoles } from "../../lib/store.ts";
+import { getContacts, getRoles, getUser } from "../../lib/store.ts";
 import UserProfile from "../../components/UserProfile.tsx";
 
 export const handler: Handlers = {
@@ -11,22 +11,28 @@ export const handler: Handlers = {
     const userId = url.pathname.split("/user/")[1];
     const contacts = await getContacts(userId);
     const roles = await getRoles(userId);
-    const userProfile = await getUser(userId);
+    const profile = await getUser(userId);
     const { dateTimeFormat } = ctx.state; // Of the user doing the lookup.
     const props = {
       dateTimeFormat,
       numContacts: contacts.length,
       numRoles: roles.length,
-      userProfile,
+      profile,
     };
     return ctx.render(props);
   },
-
 };
 
 export default function User(props) {
-  const { dateTimeFormat, numContacts, numRoles, userProfile} = props.data;
+  const { dateTimeFormat, numContacts, numRoles, profile } = props.data;
   return (
-    <UserProfile dateTimeFormat={dateTimeFormat} profile={userProfile} />
+    <div id="profile-container">
+      <UserProfile
+        profile={profile}
+        dateTimeFormat={dateTimeFormat}
+        numContacts={numContacts}
+        numRoles={numRoles}
+      />
+    </div>
   );
 }

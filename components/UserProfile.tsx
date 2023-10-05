@@ -1,6 +1,8 @@
 import { epochToLocale } from "../lib/utils.ts";
 
-export default function UserProfile({ profile, dateTimeFormat }) {
+export default function UserProfile(
+  { profile, dateTimeFormat, numContacts, numRoles },
+) {
   const { locale, timeZone } = dateTimeFormat;
   return (
     <div class="border border-solid border-gray-400 rounded-b-lg px-4">
@@ -27,6 +29,16 @@ export default function UserProfile({ profile, dateTimeFormat }) {
                 Account Created
               </div>
             </th>
+            <th class="p-4">
+              <div class="flex justify-center">
+                Contacts
+              </div>
+            </th>
+            <th class="p-4">
+              <div class="flex justify-center">
+                Roles
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +51,8 @@ export default function UserProfile({ profile, dateTimeFormat }) {
             <td class="p-4">
               {epochToLocale(profile.createdAt, locale, timeZone)}
             </td>
+            <td class="p-4">{numContacts}</td>
+            <td class="p-4">{numRoles}</td>
           </tr>
         </tbody>
       </table>

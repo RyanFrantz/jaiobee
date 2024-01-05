@@ -151,6 +151,21 @@ const getRole = async (userId: string, roleId: number): [number, object] => {
   }
 };
 
+// Given a role ID and boolean value, set a role's archive status accordingly.
+const setRoleArchive = async (userId: string, roleId: number, isArchived: boolean) => {
+  const kv = await Deno.openKv();
+  await kv.set([userId, "roleArchive", roleId], isArchived);
+  kv.close();
+};
+
+// Given a role ID returns a role's archive status.
+const getRoleArchive = async (userId: string, roleId: number) => {
+  const kv = await Deno.openKv();
+  const isArchived = await kv.get([userId, "roleArchive", roleId]);
+  kv.close();
+  return isArchived;
+};
+
 // Returns an HTTP status code and an object with helpful context.
 const addRole = async (userId: string, role): [number, object] => {
   const roles = await getRoles(userId);
@@ -603,11 +618,13 @@ export {
   getNoteActivity,
   getNotes,
   getRole,
+  getRoleArchive,
   getRoles,
   getUser,
   getUserProfiles,
   isAdmin,
   makeNote,
+  setRoleArchive,
   updateContact,
   updateLastLogin,
   updateRole,

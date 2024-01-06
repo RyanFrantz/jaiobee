@@ -163,7 +163,7 @@ const getRoleArchive = async (userId: string, roleId: number) => {
   const kv = await Deno.openKv();
   const isArchived = await kv.get([userId, "roleArchive", roleId]);
   kv.close();
-  return isArchived;
+  return isArchived.value;
 };
 
 // Returns an HTTP status code and an object with helpful context.

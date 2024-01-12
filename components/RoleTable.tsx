@@ -37,6 +37,11 @@ export default function RoleTable({ roles, noteActivity, dateTimeFormat }) {
                   <SortArrow />
                 </div>
               </th>
+              <th class="p-4">
+                <div class="flex justify-center">
+                  Archived?
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -56,6 +61,7 @@ export default function RoleTable({ roles, noteActivity, dateTimeFormat }) {
                   )}
                 </td>
                 <td class="p-4">{role.status}</td>
+                <td class="p-4 flex justify-center">{role.isArchived}</td>
               </tr>
             ))}
           </tbody>

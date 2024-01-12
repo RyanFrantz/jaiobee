@@ -5,7 +5,7 @@ import { getRoleArchive, setRoleArchive } from "../../../../lib/store.ts";
 const checkbox = async ({userId = "", url = new URL(), toggle = false} = {}) => {
   // /api/role/4/archive
   //           ^
-  const roleId = url.pathname.split('/')[3];
+  const roleId = Number(url.pathname.split('/')[3]);
   let isArchived = await getRoleArchive(userId, roleId);
   if (toggle) {
     isArchived = !isArchived;

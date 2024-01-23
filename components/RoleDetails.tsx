@@ -85,6 +85,14 @@ export default function RoleDetails({ dateTimeFormat, role }) {
         {/* Contacts */}
         <div class="w-full p-4 grid grid-cols-1">
           <div class="col-span-1 mt-2 mr-2">
+            <div
+              id="archiveStatus"
+              hx-get={"/api/role/" + role.id + "/archive"}
+              hx-target="#archiveStatus"
+              hx-trigger="load"
+              hx-swap="outerHTML"
+            >
+            </div>
             <label for="createdAt" class="block text-sm pr-1 underline">
               Created
             </label>

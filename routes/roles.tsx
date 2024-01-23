@@ -4,12 +4,17 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 // Hence RoleTable rather than Roles below.
 import RoleTable from "../components/RoleTable.tsx";
 import AddRoleButton from "../components/AddRoleButton.tsx";
-import { getNoteActivity, getRoles } from "../lib/store.ts";
+import { getNoteActivity, getRoles, getRoleArchive } from "../lib/store.ts";
+import ToggleArchive from "../islands/ToggleArchive.tsx";
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
     const { dateTimeFormat, userId } = ctx.state;
     const roles = await getRoles(userId);
+    for (const role of roles) {
+      const isArchived = await getRoleArchive(userId, role.id);
+      role.isArchived = isArchived ? "yes": "no";
+    }
     const noteActivity = await getNoteActivity(userId);
     return await ctx.render({ roles, noteActivity, dateTimeFormat });
   },
@@ -21,6 +26,7 @@ export default function Roles(props: PageProps) {
     <>
       <div id="roles-container">
         <AddRoleButton />
+        <ToggleArchive />
         <RoleTable
           roles={roles}
           noteActivity={noteActivity}

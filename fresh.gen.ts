@@ -8,27 +8,29 @@ import * as $2 from "./routes/admin/_middleware.ts";
 import * as $3 from "./routes/admin/index.tsx";
 import * as $4 from "./routes/api/_middleware.ts";
 import * as $5 from "./routes/api/login.ts";
-import * as $6 from "./routes/api/signup.ts";
-import * as $7 from "./routes/buy.tsx";
-import * as $8 from "./routes/contact/[id].tsx";
-import * as $9 from "./routes/contact/[id]/edit.tsx";
-import * as $10 from "./routes/contact/[id]/note/add.tsx";
-import * as $11 from "./routes/contact/[id]/notes.tsx";
-import * as $12 from "./routes/contact/add.tsx";
-import * as $13 from "./routes/contacts.tsx";
-import * as $14 from "./routes/index.tsx";
-import * as $15 from "./routes/login.tsx";
-import * as $16 from "./routes/profile.tsx";
-import * as $17 from "./routes/role/[id].tsx";
-import * as $18 from "./routes/role/[id]/edit.tsx";
-import * as $19 from "./routes/role/[id]/note/add.tsx";
-import * as $20 from "./routes/role/[id]/notes.tsx";
-import * as $21 from "./routes/role/add.tsx";
-import * as $22 from "./routes/roles.tsx";
-import * as $23 from "./routes/signout.ts";
-import * as $24 from "./routes/signup.tsx";
-import * as $25 from "./routes/user/[id].tsx";
+import * as $6 from "./routes/api/role/[id]/archive.ts";
+import * as $7 from "./routes/api/signup.ts";
+import * as $8 from "./routes/buy.tsx";
+import * as $9 from "./routes/contact/[id].tsx";
+import * as $10 from "./routes/contact/[id]/edit.tsx";
+import * as $11 from "./routes/contact/[id]/note/add.tsx";
+import * as $12 from "./routes/contact/[id]/notes.tsx";
+import * as $13 from "./routes/contact/add.tsx";
+import * as $14 from "./routes/contacts.tsx";
+import * as $15 from "./routes/index.tsx";
+import * as $16 from "./routes/login.tsx";
+import * as $17 from "./routes/profile.tsx";
+import * as $18 from "./routes/role/[id].tsx";
+import * as $19 from "./routes/role/[id]/edit.tsx";
+import * as $20 from "./routes/role/[id]/note/add.tsx";
+import * as $21 from "./routes/role/[id]/notes.tsx";
+import * as $22 from "./routes/role/add.tsx";
+import * as $23 from "./routes/roles.tsx";
+import * as $24 from "./routes/signout.ts";
+import * as $25 from "./routes/signup.tsx";
+import * as $26 from "./routes/user/[id].tsx";
 import * as $$0 from "./islands/DetectUserLocale.tsx";
+import * as $$1 from "./islands/ToggleArchive.tsx";
 
 const manifest = {
   routes: {
@@ -38,29 +40,31 @@ const manifest = {
     "./routes/admin/index.tsx": $3,
     "./routes/api/_middleware.ts": $4,
     "./routes/api/login.ts": $5,
-    "./routes/api/signup.ts": $6,
-    "./routes/buy.tsx": $7,
-    "./routes/contact/[id].tsx": $8,
-    "./routes/contact/[id]/edit.tsx": $9,
-    "./routes/contact/[id]/note/add.tsx": $10,
-    "./routes/contact/[id]/notes.tsx": $11,
-    "./routes/contact/add.tsx": $12,
-    "./routes/contacts.tsx": $13,
-    "./routes/index.tsx": $14,
-    "./routes/login.tsx": $15,
-    "./routes/profile.tsx": $16,
-    "./routes/role/[id].tsx": $17,
-    "./routes/role/[id]/edit.tsx": $18,
-    "./routes/role/[id]/note/add.tsx": $19,
-    "./routes/role/[id]/notes.tsx": $20,
-    "./routes/role/add.tsx": $21,
-    "./routes/roles.tsx": $22,
-    "./routes/signout.ts": $23,
-    "./routes/signup.tsx": $24,
-    "./routes/user/[id].tsx": $25,
+    "./routes/api/role/[id]/archive.ts": $6,
+    "./routes/api/signup.ts": $7,
+    "./routes/buy.tsx": $8,
+    "./routes/contact/[id].tsx": $9,
+    "./routes/contact/[id]/edit.tsx": $10,
+    "./routes/contact/[id]/note/add.tsx": $11,
+    "./routes/contact/[id]/notes.tsx": $12,
+    "./routes/contact/add.tsx": $13,
+    "./routes/contacts.tsx": $14,
+    "./routes/index.tsx": $15,
+    "./routes/login.tsx": $16,
+    "./routes/profile.tsx": $17,
+    "./routes/role/[id].tsx": $18,
+    "./routes/role/[id]/edit.tsx": $19,
+    "./routes/role/[id]/note/add.tsx": $20,
+    "./routes/role/[id]/notes.tsx": $21,
+    "./routes/role/add.tsx": $22,
+    "./routes/roles.tsx": $23,
+    "./routes/signout.ts": $24,
+    "./routes/signup.tsx": $25,
+    "./routes/user/[id].tsx": $26,
   },
   islands: {
     "./islands/DetectUserLocale.tsx": $$0,
+    "./islands/ToggleArchive.tsx": $$1,
   },
   baseUrl: import.meta.url,
 };

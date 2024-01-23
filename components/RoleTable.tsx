@@ -37,11 +37,21 @@ export default function RoleTable({ roles, noteActivity, dateTimeFormat }) {
                   <SortArrow />
                 </div>
               </th>
+              <th class="p-4">
+                <div
+                  id="role-archive-header"
+                  class="flex justify-center hidden"
+                >
+                  Archived?
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
             {roles.map((role) => (
-              <tr>
+              <tr
+                class={role.isArchived == "yes" ? "role-archived bg-gray-100 hidden" : "role-active"}
+              >
                 <td class="p-4">
                   <a href={"/role/" + role.id} class="hover:underline">
                     {role.title}
@@ -56,6 +66,7 @@ export default function RoleTable({ roles, noteActivity, dateTimeFormat }) {
                   )}
                 </td>
                 <td class="p-4">{role.status}</td>
+                <td class="archive-column p-4 flex justify-center hidden">{role.isArchived}</td>
               </tr>
             ))}
           </tbody>

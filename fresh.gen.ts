@@ -30,6 +30,7 @@ import * as $24 from "./routes/signout.ts";
 import * as $25 from "./routes/signup.tsx";
 import * as $26 from "./routes/user/[id].tsx";
 import * as $$0 from "./islands/DetectUserLocale.tsx";
+import * as $$1 from "./islands/ToggleArchive.tsx";
 
 const manifest = {
   routes: {
@@ -63,6 +64,7 @@ const manifest = {
   },
   islands: {
     "./islands/DetectUserLocale.tsx": $$0,
+    "./islands/ToggleArchive.tsx": $$1,
   },
   baseUrl: import.meta.url,
 };

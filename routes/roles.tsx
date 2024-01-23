@@ -5,6 +5,7 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import RoleTable from "../components/RoleTable.tsx";
 import AddRoleButton from "../components/AddRoleButton.tsx";
 import { getNoteActivity, getRoles, getRoleArchive } from "../lib/store.ts";
+import ToggleArchive from "../islands/ToggleArchive.tsx";
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
@@ -25,6 +26,7 @@ export default function Roles(props: PageProps) {
     <>
       <div id="roles-container">
         <AddRoleButton />
+        <ToggleArchive />
         <RoleTable
           roles={roles}
           noteActivity={noteActivity}
